@@ -1,21 +1,36 @@
-import Footer from "./components/Footer"
-import Header from "./components/Header"
-import Hero from "./components/Hero"
-import MonthEvent from "./components/MonthEvent"
-import News from "./components/News"
-
+import { Routes, Route } from "react-router-dom";
+import Header from "./layouts/Header";
+import Footer from "./layouts/Footer";
+import Hero from "./layouts/Hero";
+import MonthEvent from "./layouts/MonthEvent";
+import News from "./layouts/News";
+import NewsPage from "./pages/NewsPage";
 
 function App() {
   return (
-    <div className="App">
+    <>
       <Header />
-      <Hero />
-      <News />
-      <MonthEvent />
+
+      <Routes>
+        {/* Page d'accueil */}
+        <Route
+          path="/"
+          element={
+            <>
+              <Hero />
+              <News />       {/* seulement les 3 derniers articles */}
+              <MonthEvent />
+            </>
+          }
+        />
+
+        {/* Page des actualités complètes */}
+        <Route path="/news" element={<NewsPage />} />
+      </Routes>
 
       <Footer />
-    </div>
-  )
+    </>
+  );
 }
 
-export default App
+export default App;

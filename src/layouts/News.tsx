@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 type Article = {
     id: number;
@@ -41,12 +42,12 @@ export default function News() {
                     ))}
                 </div>
                 <div className="mt-6">
-                    <a
-                        href="/news"
+                    <Link
+                        to="/news"
                         className="inline-block bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition"
                     >
                         Voir plus d’actualités
-                    </a>
+                    </Link>
                 </div>
             </div>
         </section>
