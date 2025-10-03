@@ -52,7 +52,7 @@ export default function MonthEvent() {
                                 <img
                                     src={`http://localhost:5000${event.image}`}
                                     alt={`Image de l'événement ${event.titre}`}
-                                    className="rounded-lg shadow-md max-h-[150px] object-cover mb-4 w-full mx-auto"
+                                    className="rounded-lg shadow-md max-h-[450px] object-cover mb-4 w-full mx-auto"
                                 />
                             )}
                         </a>
