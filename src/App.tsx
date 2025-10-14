@@ -11,6 +11,11 @@ import EventsPage from "./pages/EventsPage";
 import EventPage from "./pages/EventPage";
 import EditEventPage from "./pages/EditEventPage";
 import LoginPage from "./pages/LoginPage";
+import ShopPage from "./pages/shopPage";
+import CartPage from "./pages/CartePage";
+import RegisterForm from "./components/RegisterForm";
+import BackofficeClient from "./pages/BackofficeClient";
+import CreateSaleForm from "./components/CreateSaleForm";
 
 function App() {
   return (
@@ -29,8 +34,14 @@ function App() {
             </>
           }
         />
+        {/* Page d'inscription */}
+        <Route path="/register" element={<RegisterForm />} />
+
         {/* Page de connexion */}
         <Route path="/login" element={<LoginPage />} />
+
+        {/** Page du backoffice */}
+        <Route path="/backoffice" element={<BackofficeClient />} />
 
         {/* Page des actualités complètes */}
         <Route path="/news" element={<NewsPage />} />
@@ -50,6 +61,14 @@ function App() {
         {/* Modifier un événement */}
         <Route path="/events/edit/:id" element={<EditEventPage />} />
 
+        {/* Page de la boutique */}
+        <Route path="/boutique" element={<ShopPage />} />
+
+        {/*Page produit individuel */}
+        <Route path="/cart/:saleId" element={<CartPage />} />
+
+        {/* Page création de vente */}
+        <Route path="/admin/create-sale" element={<CreateSaleForm />} />
       </Routes>
 
       <Footer />

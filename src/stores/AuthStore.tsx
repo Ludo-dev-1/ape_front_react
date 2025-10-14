@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { jwtDecode } from "jwt-decode"; // attention à l'import par défaut, pas destructuré
+import { jwtDecode } from "jwt-decode";
 
 interface DecodedToken {
     email: any;
@@ -14,10 +14,10 @@ interface IAuthState {
     isMemberBureau: boolean;
     isParent: boolean;
     userId: number | null;
-    role_id: number | null; // ajout de role_id pour correspondre à la structure du token
+    role_id: number | null;
     login: (token: string) => void;
     logout: () => void;
-    loadFromStorage: () => void;  // nouvelle fonction pour charger depuis localStorage
+    loadFromStorage: () => void;
 }
 
 export const useAuthStore = create<IAuthState>((set) => ({
@@ -54,7 +54,7 @@ export const useAuthStore = create<IAuthState>((set) => ({
             isAdmin,
             isParent,
             isMemberBureau,
-            isMember: isParent || isMemberBureau || isMember, // booléen global
+            isMember: isParent || isMemberBureau || isMember,
             userId
         });
     },
