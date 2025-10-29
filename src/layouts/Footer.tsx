@@ -1,6 +1,6 @@
 export default function Footer() {
     return (
-        <footer className="bg-gray-800 text-white mt-12">
+        <footer className="bg-slate-800 text-white mt-12">
             <div className="container mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
                     <h4 className="text-lg font-semibold mb-4">Navigation</h4>
@@ -53,7 +53,7 @@ export default function Footer() {
                     </ul>
                 </div>
             </div>
-            <div className="text-center text-sm py-4 bg-gray-900">
+            <div className="text-center text-sm py-4 bg-slate-800">
                 © 2025 Association de Parents d'Élèves – Tous droits réservés.
             </div>
         </footer>

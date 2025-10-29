@@ -29,14 +29,14 @@ export default function MonthEvent() {
     const eventDuMois = events.slice(6, 7);
 
     return (
-        <section className="bg-gray-100 py-12">
+        <section className="w-10/12 mx-auto shadow-2xl py-12 mt-16 text-white ">
             <div className="container mx-auto px-4">
-                <h2 className="text-2xl font-semibold mb-4">Événement du moment</h2>
+                <h2 className="text-4xl font-semibold mb-4 text-center">Événement du moment</h2>
 
                 {eventDuMois.map((event) => (
                     <div
                         key={event.id}
-                        className="bg-white p-6 rounded-lg shadow-md"
+                        className="bg-slate-800 m-12 p-12 rounded-lg shadow-md"
                     >
                         <a href={`/events/${event.id}`}>
                             <h3 className="text-xl font-semibold mb-2">{event.titre}</h3>
@@ -61,7 +61,7 @@ export default function MonthEvent() {
 
                 <a
                     href="/events"
-                    className="inline-block bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition mt-6"
+                    className="inline-block border-2 border-blue-600  text-blue-600 px-5 py-2 rounded-full hover:bg-blue-700 hover:text-white hover:border-white transition mt-6"
                 >
                     Voir tous les événements
                 </a>

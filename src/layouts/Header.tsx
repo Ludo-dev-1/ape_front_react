@@ -21,7 +21,7 @@ export default function Header() {
     };
 
     return (
-        <header className="bg-white shadow">
+        <header className="bg-slate-950  text-white shadow-lg fixed w-full z-1000">
             <div className="container mx-auto px-4 py-4 flex items-center justify-between">
                 {/* Logo */}
                 <Link to="/">

@@ -23,14 +23,13 @@ const useCartStore = create<CartState>((set) => ({
                     item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
                 );
             } else {
-                // Sinon, ajoute le produit avec une quantité initiale de 1
                 updatedCart = [
                     ...state.cart,
                     {
                         ...product,
                         quantity: 1,
-                        image: product.image_url ?
-                            `/images/arbres/${product.image_url}.webp`
+                        image: product.image_url
+                            ? `${import.meta.env.VITE_API_URL}/uploads/${product.image_url}`
                             : "/images/default.png",
                     },
                 ];

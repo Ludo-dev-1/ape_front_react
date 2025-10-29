@@ -16,62 +16,71 @@ import CartPage from "./pages/CartePage";
 import RegisterForm from "./components/RegisterForm";
 import BackofficeClient from "./pages/BackofficeClient";
 import CreateSaleForm from "./components/CreateSaleForm";
+import Panier from "./pages/Panier";
 
 function App() {
   return (
     <>
-      <Header />
 
-      <Routes>
-        {/* Page d'accueil */}
-        <Route
-          path="/"
-          element={
-            <>
-              <Hero />
-              <News />       {/* seulement les 3 derniers articles */}
-              <MonthEvent />
-            </>
-          }
-        />
-        {/* Page d'inscription */}
-        <Route path="/register" element={<RegisterForm />} />
+      <section className="bg-slate-950 ">
+        <Header />
 
-        {/* Page de connexion */}
-        <Route path="/login" element={<LoginPage />} />
+        <Routes>
+          {/* Page d'accueil */}
+          <Route
+            path="/"
+            element={
+              <>
+                <Hero />
+                <News />       {/* seulement les 3 derniers articles */}
+                <MonthEvent />
+              </>
+            }
+          />
+          {/* Page d'inscription */}
+          <Route path="/register" element={<RegisterForm />} />
 
-        {/** Page du backoffice */}
-        <Route path="/backoffice" element={<BackofficeClient />} />
+          {/* Page de connexion */}
+          <Route path="/login" element={<LoginPage />} />
 
-        {/* Page des actualités complètes */}
-        <Route path="/news" element={<NewsPage />} />
+          {/** Page du backoffice */}
+          <Route path="/backoffice" element={<BackofficeClient />} />
 
-        {/* Article individuel */}
-        <Route path="/news/:id" element={<ArticlePage />} />
+          {/* Page des actualités complètes */}
+          <Route path="/news" element={<NewsPage />} />
 
-        {/* Modifier un article */}
-        <Route path="/news/edit/:id" element={<EditArticlePage />} />
+          {/* Article individuel */}
+          <Route path="/news/:id" element={<ArticlePage />} />
 
-        {/* Page des événements */}
-        <Route path="/events" element={<EventsPage />} />
+          {/* Modifier un article */}
+          <Route path="/news/edit/:id" element={<EditArticlePage />} />
 
-        {/* Evenement individuel */}
-        <Route path="/events/:id" element={<EventPage />} />
+          {/* Page des événements */}
+          <Route path="/events" element={<EventsPage />} />
 
-        {/* Modifier un événement */}
-        <Route path="/events/edit/:id" element={<EditEventPage />} />
+          {/* Evenement individuel */}
+          <Route path="/events/:id" element={<EventPage />} />
 
-        {/* Page de la boutique */}
-        <Route path="/boutique" element={<ShopPage />} />
+          {/* Modifier un événement */}
+          <Route path="/events/edit/:id" element={<EditEventPage />} />
 
-        {/*Page produit individuel */}
-        <Route path="/cart/:saleId" element={<CartPage />} />
+          {/* Page de la boutique */}
+          <Route path="/boutique" element={<ShopPage />} />
 
-        {/* Page création de vente */}
-        <Route path="/admin/create-sale" element={<CreateSaleForm />} />
-      </Routes>
+          {/*Page produit individuel */}
+          <Route path="/cart/:saleId" element={<CartPage />} />
 
-      <Footer />
+          {/* Page création de vente */}
+          <Route path="/admin/create-sale" element={<CreateSaleForm />} />
+
+          {/* Page panier*/}
+          <Route path="/panier" element={<Panier />} />
+
+        </Routes>
+
+        <Footer />
+      </section>
+
     </>
   );
 }
