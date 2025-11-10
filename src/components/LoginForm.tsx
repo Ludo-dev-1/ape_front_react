@@ -56,7 +56,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
     };
 
     return (
-        <section className="bg-gray-100 py-12 min-h-screen flex items-center justify-center">
+        <section className="bg-slate-950 py-12 min-h-screen flex items-center justify-center">
             <form onSubmit={handleSubmit} className="max-w-md w-full bg-white p-8 rounded-lg shadow-lg space-y-4">
                 <h2 className="text-2xl font-bold mb-4 text-center">Connexion</h2>
                 {error && (

@@ -17,12 +17,13 @@ import RegisterForm from "./components/RegisterForm";
 import BackofficeClient from "./pages/BackofficeClient";
 import CreateSaleForm from "./components/CreateSaleForm";
 import Panier from "./pages/Panier";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   return (
     <>
 
-      <section className="bg-slate-950 ">
+      <section className="bg-slate-950 box-border outline-none p-0 decoration-none list-none scroll-smooth">
         <Header />
 
         <Routes>
@@ -75,6 +76,9 @@ function App() {
 
           {/* Page panier*/}
           <Route path="/panier" element={<Panier />} />
+
+          {/* Route de profil */}
+          <Route path="/profile" element={<ProfilePage />} />
 
         </Routes>
 

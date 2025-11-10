@@ -40,16 +40,16 @@ export default function EventDetailPage() {
     return (
         <>
 
-            <section className="bg-white py-12">
+            <section className="bg-slate-950 text-white pt-32 pb-12 min-h-screen">
                 <div className="container mx-auto px-4 max-w-3xl flex flex-col items-center">
                     <h1 className="text-3xl font-bold mb-6">{event.titre}</h1>
-                    <p className="text-gray-600 mb-2 text-sm">
+                    <p className="text-white mb-2 text-sm">
                         Publié le{" "}
                         {event.date_publication
                             ? new Date(event.date_publication).toLocaleDateString("fr-FR")
                             : ""}
                     </p>
-                    <div className="mt-6 text-gray-800 leading-relaxed whitespace-pre-line">
+                    <div className="mt-6 text-gray-200leading-relaxed whitespace-pre-line">
                         {event.description}
                     </div>
                     {event.image && (
@@ -60,7 +60,7 @@ export default function EventDetailPage() {
                         />
                     )}
                     <div className="mt-8">
-                        <Link to="/events" className="text-blue-600 hover:underline">
+                        <Link to="/events" className="text-gray-200 hover:bg-gray-700 px-4 py-2 rounded">
                             ← Retour aux événements
                         </Link>
                     </div>

@@ -66,25 +66,25 @@ export default function CartPage() {
     const saleIsActive = products[0].is_active; // récupère is_active depuis le premier produit
 
     return (
-        <div className="container mx-auto px-4 py-10">
-            <h1 className="text-3xl font-bold mb-6">🛒 Vente : {saleName}</h1>
+        <div className="container mx-auto px-4 mt-20 py-10 ">
+            <h1 className="text-3xl font-bold mb-6 text-white">🛒 Vente : {saleName}</h1>
 
             <div className="bg-gray-100 p-6 rounded-lg shadow-md mb-8">
                 <p>
                     <strong>Statut :</strong>{" "}
                     {saleIsActive ? (
-                        <span className="text-green-600 font-semibold">En cours</span>
+                        <span className="text-green-600 font-semibold ">En cours</span>
                     ) : (
                         <span className="text-red-600 font-semibold">Terminée</span>
                     )}
                 </p>
             </div>
 
-            <h2 className="text-2xl font-semibold mb-4">Produits disponibles :</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-white">Produits disponibles :</h2>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {products.map((product) => (
                     <div key={product.id} className="border p-4 rounded-lg shadow hover:shadow-lg transition">
-                        <h3 className="text-xl font-semibold">{product.name}</h3>
+                        <h3 className="text-xl font-semibold text-white">{product.name}</h3>
                         <p className="text-gray-600">{product.price} €</p>
                         {product.image_url && (
                             <img
@@ -93,7 +93,7 @@ export default function CartPage() {
                                 className="w-full h-48 object-cover rounded mt-2"
                             />
                         )}
-                        <p className="mt-2 text-sm text-gray-500">{product.description}</p>
+                        <p className="mt-2 text-sm text-white">{product.description}</p>
                         <button className="mt-3 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
                             onClick={() => (addToCart(product))}>
                             Ajouter au panier

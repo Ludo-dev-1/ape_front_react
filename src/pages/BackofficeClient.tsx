@@ -55,7 +55,12 @@ export default function BackofficeClient() {
             setParents((prev) =>
                 prev.map((p) =>
                     p.email === parentEmail
-                        ? { ...p, roles: [{ id: data.parent.roles[0].id, nom: data.parent.roles[0].nom }] }
+                        ? {
+                            ...p,
+                            roles: [
+                                { id: data.parent.roles[0].id, nom: data.parent.roles[0].nom },
+                            ],
+                        }
                         : p
                 )
             );
@@ -67,46 +72,59 @@ export default function BackofficeClient() {
     if (error) return <p>{error}</p>;
     if (!parents.length) return <p>Chargement...</p>;
 
-    // Récupérer l'email de l'utilisateur connecté (par exemple depuis le localStorage)
     const currentUserEmail = localStorage.getItem("userEmail") || "";
 
     return (
-        <table className="min-w-fit bg-white border m-auto mt-10">
-            <thead>
-                <tr>
-                    <th className="py-2 px-4 border-b">Nom</th>
-                    <th className="py-2 px-4 border-b">Email</th>
-                    <th className="py-2 px-4 border-b">Rôle</th>
-                    <th className="py-2 px-4 border-b">Modifier</th>
-                </tr>
-            </thead>
-            <tbody>
-                {parents
-                    .filter((parent) => parent.email !== currentUserEmail) // Exclure l'utilisateur connecté
-                    .map((parent) => (
-                        <tr key={parent.email}>
-                            <td className="py-2 px-4 border-b">{parent.nom}</td>
-                            <td className="py-2 px-4 border-b">{parent.email}</td>
-                            <td className="py-2 px-4 border-b">
-                                {parent.roles.map((r) => r.nom).join(", ")}
-                            </td>
-                            <td className="py-2 px-4 border-b">
-                                <select
-                                    value={parent.roles[0]?.id || ""}
-                                    onChange={(e) => handleEditRole(parent.email, e.target.value)}
-                                    className="border rounded px-2 py-1"
-                                >
-                                    <option value="1">Admin</option>
-                                    <option value="2">Parent</option>
-                                    <option value="3">Membre_bureau</option>
-                                    <option value="4">Membre_ape</option>
-                                </select>
+        <div className="w-full px-2 sm:px-6 lg:px-8 pt-16">
+            <h1 className="text-3xl md:text-4xl font-bold mt-20 text-center text-white">
+                Gestion des utilisateurs
+            </h1>
 
-                            </td>
+            {/* Conteneur scrollable pour la table */}
+            <div className="overflow-x-auto mt-8 rounded-xl shadow-lg bg-white">
+                <table className="min-w-full border-collapse text-sm md:text-base">
+                    <thead className="bg-gray-200">
+                        <tr>
+                            <th className="py-3 px-4 border-b text-left">Nom</th>
+                            <th className="py-3 px-4 border-b text-left">Email</th>
+                            <th className="py-3 px-4 border-b text-left">Rôle</th>
+                            <th className="py-3 px-4 border-b text-left">Modifier</th>
                         </tr>
-                    ))}
-            </tbody>
-
-        </table>
+                    </thead>
+                    <tbody>
+                        {parents
+                            .filter((parent) => parent.email !== currentUserEmail)
+                            .map((parent) => (
+                                <tr
+                                    key={parent.email}
+                                    className="border-b hover:bg-gray-50 transition-colors"
+                                >
+                                    <td className="py-3 px-4 whitespace-nowrap">{parent.nom}</td>
+                                    <td className="py-3 px-4 whitespace-nowrap">
+                                        {parent.email}
+                                    </td>
+                                    <td className="py-3 px-4 whitespace-nowrap">
+                                        {parent.roles.map((r) => r.nom).join(", ")}
+                                    </td>
+                                    <td className="py-3 px-4 whitespace-nowrap">
+                                        <select
+                                            value={parent.roles[0]?.id || ""}
+                                            onChange={(e) =>
+                                                handleEditRole(parent.email, e.target.value)
+                                            }
+                                            className="border rounded px-2 py-1 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                                        >
+                                            <option value="1">Admin</option>
+                                            <option value="2">Parent</option>
+                                            <option value="3">Membre_bureau</option>
+                                            <option value="4">Membre_ape</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            ))}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     );
 }

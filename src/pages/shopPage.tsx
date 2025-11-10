@@ -54,7 +54,7 @@ export default function ShopPage() {
     if (loading) return <div>Chargement...</div>;
 
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="text-white container mx-auto px-4 py-8">
             <h1 className="text-3xl font-bold">Boutique</h1>
             <h2 className="text-2xl font-semibold mt-4">Vente du moment :</h2>
 

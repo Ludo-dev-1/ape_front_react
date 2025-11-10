@@ -33,7 +33,7 @@ export default function Panier() {
         );
     }
     return (
-        <div className="max-w-3xl mx-auto mt-10 p-4">
+        <div className="max-w-3xl mx-auto p-4 text-white mt-20 h-dvh pt-32">
             <h1 className="text-2xl font-bold mb-6">Votre Panier</h1>
             <table className="w-full border-collapse mb-6">
                 <thead>
@@ -64,7 +64,7 @@ export default function Panier() {
                                     min="1"
                                     value={item.quantity}
                                     onChange={(e) => updateQuantity(item.id.toString(), Number(e.target.value))}
-                                    className="w-16 border rounded px-2 py-1"
+                                    className="w-16 border rounded px-2 py-1 text-black"
                                 />
                             </td>
                             <td className="border-b p-2">{(item.price * item.quantity).toFixed(2)} €</td>

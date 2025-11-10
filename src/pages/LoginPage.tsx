@@ -8,7 +8,7 @@ export default function LoginPage() {
         <>
 
 
-            <main className="py-12 bg-gray-100 min-h-screen flex justify-center items-center">
+            <main className="py-12 bg-slate-950  min-h-screen flex justify-center items-center">
                 <div className="container mx-auto px-4 max-w-md">
                     <LoginForm />
                 </div>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
 
 type Event = {
     id: number;
@@ -59,12 +60,16 @@ export default function MonthEvent() {
                     </div>
                 ))}
 
-                <a
-                    href="/events"
-                    className="inline-block border-2 border-blue-600  text-blue-600 px-5 py-2 rounded-full hover:bg-blue-700 hover:text-white hover:border-white transition mt-6"
-                >
-                    Voir tous les événements
-                </a>
+
+                <div className="mt-6 text-center">
+                    <Link
+                        to="/events"
+                        className=" inline-block border-2 border-blue-600  text-blue-600 px-5 py-2 rounded-full hover:bg-blue-700 hover:text-white hover:border-white transition mt-6 hover:ease-in-out duration-300"
+                    >
+                        Voir tous les événements
+                    </Link>
+
+                </div>
             </div>
         </section>
     );
