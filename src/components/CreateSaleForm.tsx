@@ -1,13 +1,11 @@
-// src/components/CreateSaleForm.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import type { ProductInput } from "../interfaces/shop";
-
 
 export default function CreateSaleForm() {
     const [name, setName] = useState("");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
-    const [isActive, setIsActive] = useState(true);
+    const [isActive, setIsActive] = useState(false);
     const [saleImageFile, setSaleImageFile] = useState<File | null>(null);
 
     const [products, setProducts] = useState<ProductInput[]>([
@@ -16,8 +14,27 @@ export default function CreateSaleForm() {
 
     const [loading, setLoading] = useState(false);
 
+    // 🔄 Calcul automatique de isActive selon les dates
+    useEffect(() => {
+        if (startDate && endDate) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            end.setHours(23, 59, 59, 999);
+
+            setIsActive(today >= start && today <= end);
+        } else {
+            setIsActive(false);
+        }
+    }, [startDate, endDate]);
+
     const handleAddProduct = () => {
-        setProducts(p => [...p, { tempId: crypto.randomUUID(), name: "", price: "", stock: "0", description: "", imageFile: null }]);
+        setProducts(p => [
+            ...p,
+            { tempId: crypto.randomUUID(), name: "", price: "", stock: "0", description: "", imageFile: null },
+        ]);
     };
 
     const handleRemoveProduct = (index: number) => {
@@ -39,10 +56,9 @@ export default function CreateSaleForm() {
         setLoading(true);
 
         try {
-            // On garde tous les produits, même incomplets, mais on ne les envoie pas s’ils sont vides
             const validProducts = products
-                .filter((p) => p.name.trim() !== "" && p.price.trim() !== "")
-                .map((p) => ({
+                .filter(p => p.name.trim() !== "" && p.price.trim() !== "")
+                .map(p => ({
                     id: p.id,
                     name: p.name.trim(),
                     price: p.price.trim(),
@@ -60,22 +76,17 @@ export default function CreateSaleForm() {
             formData.append("name", name);
             formData.append("start_date", startDate || "");
             formData.append("end_date", endDate || "");
-            formData.append("is_active", isActive ? "true" : "false");
             formData.append("products", JSON.stringify(validProducts));
 
             if (saleImageFile) formData.append("saleImage", saleImageFile);
 
-            // Appariement correct entre produits et images : on prend uniquement les produits valides
-            let validIndex = 0;
             for (const prod of products) {
                 if (prod.name.trim() !== "" && prod.price.trim() !== "") {
                     if (prod.imageFile) {
                         formData.append("productImages", prod.imageFile);
                     } else {
-                        // On ajoute un fichier vide pour garder l’index en cohérence
                         formData.append("productImages", new Blob([], { type: "application/octet-stream" }));
                     }
-                    validIndex++;
                 }
             }
 
@@ -85,8 +96,8 @@ export default function CreateSaleForm() {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
-
             });
+
             if (!res.ok) throw new Error("Erreur création vente");
             const data = await res.json();
             console.log("Vente créée", data);
@@ -95,7 +106,7 @@ export default function CreateSaleForm() {
             setName("");
             setStartDate("");
             setEndDate("");
-            setIsActive(true);
+            setIsActive(false);
             setSaleImageFile(null);
             setProducts([{ tempId: crypto.randomUUID(), name: "", price: "", stock: "0", description: "", imageFile: null }]);
         } catch (err: any) {
@@ -106,35 +117,56 @@ export default function CreateSaleForm() {
         }
     };
 
-
     return (
-        <form onSubmit={handleSubmit} className="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow space-y-4">
+        <form
+            onSubmit={handleSubmit}
+            className="max-w-3xl mx-auto mt-20 bg-white p-6 rounded-lg shadow space-y-4"
+        >
             <h2 className="text-xl font-semibold">Créer une vente</h2>
 
             <div>
                 <label className="block text-sm font-medium">Nom</label>
-                <input value={name} onChange={e => setName(e.target.value)} className="w-full mt-1 border rounded px-3 py-2" required />
+                <input
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    className="w-full mt-1 border rounded px-3 py-2"
+                    required
+                />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
                 <div>
                     <label className="block text-sm font-medium">Début</label>
-                    <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} className="w-full mt-1 border rounded px-3 py-2" />
+                    <input
+                        type="date"
+                        value={startDate}
+                        onChange={e => setStartDate(e.target.value)}
+                        className="w-full mt-1 border rounded px-3 py-2"
+                    />
                 </div>
                 <div>
                     <label className="block text-sm font-medium">Fin</label>
-                    <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} className="w-full mt-1 border rounded px-3 py-2" />
+                    <input
+                        type="date"
+                        value={endDate}
+                        onChange={e => setEndDate(e.target.value)}
+                        className="w-full mt-1 border rounded px-3 py-2"
+                    />
                 </div>
             </div>
 
-            <div className="flex items-center gap-3">
-                <label className="flex items-center gap-2">
-                    <input type="checkbox" checked={isActive} onChange={e => setIsActive(e.target.checked)} />
-                    <span className="text-sm">Active</span>
-                </label>
+            {/* 🟢 Affichage dynamique du statut */}
+            <div className="flex items-center gap-3 mt-2">
+                <span className={`px-2 py-1 rounded text-white text-sm ${isActive ? "bg-green-500" : "bg-red-500"}`}>
+                    {isActive ? "Active aujourd’hui" : "Inactive aujourd’hui"}
+                </span>
 
                 <label className="text-sm">Image de la vente</label>
-                <input type="file" accept="image/*" onChange={e => setSaleImageFile(e.target.files?.[0] || null)} />
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={e => setSaleImageFile(e.target.files?.[0] || null)}
+                />
             </div>
 
             <div>
@@ -144,26 +176,69 @@ export default function CreateSaleForm() {
                         <div key={prod.id ?? prod.tempId} className="border rounded p-3 bg-gray-50">
                             <div className="flex justify-between items-start">
                                 <strong>Produit {i + 1}</strong>
-                                <button type="button" onClick={() => handleRemoveProduct(i)} className="text-red-500">Supprimer</button>
+                                <button
+                                    type="button"
+                                    onClick={() => handleRemoveProduct(i)}
+                                    className="text-red-500"
+                                >
+                                    Supprimer
+                                </button>
                             </div>
 
                             <div className="grid grid-cols-2 gap-2 mt-2">
-                                <input placeholder="Nom" value={prod.name} onChange={e => handleProductChange(i, "name", e.target.value)} className="border rounded px-2 py-1" required />
-                                <input placeholder="Prix" value={prod.price} onChange={e => handleProductChange(i, "price", e.target.value)} className="border rounded px-2 py-1" required />
-                                <input placeholder="Stock" value={prod.stock} onChange={e => handleProductChange(i, "stock", e.target.value)} className="border rounded px-2 py-1" />
-                                <input type="file" accept="image/*" onChange={e => handleProductChange(i, "imageFile", e.target.files?.[0] || null)} />
+                                <input
+                                    placeholder="Nom"
+                                    value={prod.name}
+                                    onChange={e => handleProductChange(i, "name", e.target.value)}
+                                    className="border rounded px-2 py-1"
+                                    required
+                                />
+                                <input
+                                    placeholder="Prix"
+                                    value={prod.price}
+                                    onChange={e => handleProductChange(i, "price", e.target.value)}
+                                    className="border rounded px-2 py-1"
+                                    required
+                                />
+                                <input
+                                    placeholder="Stock"
+                                    value={prod.stock}
+                                    onChange={e => handleProductChange(i, "stock", e.target.value)}
+                                    className="border rounded px-2 py-1"
+                                />
+                                <input
+                                    type="file"
+                                    accept="image/*, .pdf"
+                                    onChange={e => handleProductChange(i, "imageFile", e.target.files?.[0] || null)}
+                                />
+
                             </div>
 
-                            <textarea placeholder="Description" value={prod.description} onChange={e => handleProductChange(i, "description", e.target.value)} className="w-full mt-2 border rounded px-2 py-1" />
+                            <textarea
+                                placeholder="Description"
+                                value={prod.description}
+                                onChange={e => handleProductChange(i, "description", e.target.value)}
+                                className="w-full mt-2 border rounded px-2 py-1"
+                            />
                         </div>
                     ))}
                 </div>
 
-                <button type="button" onClick={handleAddProduct} className="mt-3 px-3 py-1 bg-blue-600 text-white rounded">Ajouter un produit</button>
+                <button
+                    type="button"
+                    onClick={handleAddProduct}
+                    className="mt-3 px-3 py-1 bg-blue-600 text-white rounded"
+                >
+                    Ajouter un produit
+                </button>
             </div>
 
             <div>
-                <button type="submit" className="px-4 py-2 bg-green-600 text-white rounded" disabled={loading}>
+                <button
+                    type="submit"
+                    className="px-4 py-2 bg-green-600 text-white rounded"
+                    disabled={loading}
+                >
                     {loading ? "Enregistrement..." : "Créer la vente"}
                 </button>
             </div>

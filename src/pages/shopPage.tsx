@@ -13,17 +13,35 @@ export default function ShopPage() {
 
     const fetchSales = async () => {
         try {
-            const response = await fetch("http://localhost:5000/shop/sales");
-            if (!response.ok) throw new Error("Failed to fetch data");
+            setLoading(true);
+
+            const token = localStorage.getItem("token");
+            let url = role === "1"
+                ? "http://localhost:5000/admin/sales"
+                : "http://localhost:5000/shop/sales";
+
+            const response = await fetch(url, {
+                headers: {
+                    "Content-Type": "application/json",
+                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Erreur HTTP ${response.status} : ${response.statusText}`);
+            }
 
             const data = await response.json();
             setSales(data);
+            console.log("📦 Données ventes :", data);
         } catch (error) {
-            console.error("Erreur de chargement :", error);
+            console.error("❌ Erreur de chargement :", error);
         } finally {
             setLoading(false);
         }
     };
+
+
 
     useEffect(() => {
         fetchSales();
@@ -86,15 +104,16 @@ export default function ShopPage() {
                             </p>
                         )}
                         <Link to={`/cart/${sale.id}`} key={sale.id}>
-
                             {sale.picture && (
                                 <img
                                     src={`http://localhost:5000${sale.picture}`}
                                     alt={`Image de la vente ${sale.name}`}
                                     className="w-full h-48 object-cover rounded mt-3"
                                 />
+
                             )}
                         </Link>
+
 
                         {modalEditOpen && selectedSale && (
                             <EditSaleModal

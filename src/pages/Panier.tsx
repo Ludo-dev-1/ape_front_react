@@ -26,9 +26,9 @@ export default function Panier() {
     }
     if (cart.length === 0) {
         return (
-            <div className="text-center mt-10">
+            <div className="text-center mt-20 text-white h-dvh pt-32">
                 <p>Votre panier est vide.</p>
-                <Link to="/shop" className="text-blue-500 underline">Retourner à la boutique</Link>
+                <Link to="/boutique" className="text-blue-500 underline">Retourner à la boutique</Link>
             </div>
         );
     }

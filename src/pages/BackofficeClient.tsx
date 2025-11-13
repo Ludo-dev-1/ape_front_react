@@ -81,9 +81,9 @@ export default function BackofficeClient() {
             </h1>
 
             {/* Conteneur scrollable pour la table */}
-            <div className="overflow-x-auto mt-8 rounded-xl shadow-lg bg-white">
+            <div className="overflow-x-auto mt-8 rounded-xl shadow-lg bg-gray-600 text-white">
                 <table className="min-w-full border-collapse text-sm md:text-base">
-                    <thead className="bg-gray-200">
+                    <thead className="bg-gray-200 text-black">
                         <tr>
                             <th className="py-3 px-4 border-b text-left">Nom</th>
                             <th className="py-3 px-4 border-b text-left">Email</th>
@@ -91,13 +91,13 @@ export default function BackofficeClient() {
                             <th className="py-3 px-4 border-b text-left">Modifier</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody >
                         {parents
                             .filter((parent) => parent.email !== currentUserEmail)
                             .map((parent) => (
                                 <tr
                                     key={parent.email}
-                                    className="border-b hover:bg-gray-50 transition-colors"
+                                    className="border-b hover:bg-gray-300  hover:text-black transition-colors cursor-pointer"
                                 >
                                     <td className="py-3 px-4 whitespace-nowrap">{parent.nom}</td>
                                     <td className="py-3 px-4 whitespace-nowrap">
@@ -112,7 +112,7 @@ export default function BackofficeClient() {
                                             onChange={(e) =>
                                                 handleEditRole(parent.email, e.target.value)
                                             }
-                                            className="border rounded px-2 py-1 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                                            className="border rounded px-2 py-1 focus:ring-2 focus:ring-blue-400 focus:outline-none text-black"
                                         >
                                             <option value="1">Admin</option>
                                             <option value="2">Parent</option>

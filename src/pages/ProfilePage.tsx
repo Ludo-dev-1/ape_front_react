@@ -71,12 +71,16 @@ export default function ProfilePage() {
             return;
         }
         setChanging(true);
+        const token = localStorage.getItem("token");
         try {
-            const res = await fetch("/api/me/change-password", {
+            const res = await fetch("http://localhost:5000/auth/change-password", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
                 credentials: "include",
-                body: JSON.stringify({ currentPassword, newPassword }),
+                body: JSON.stringify({ currentPassword, newPassword, confirmPassword }),
             });
 
             if (res.ok) {

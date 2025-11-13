@@ -17,6 +17,9 @@ export default function CartPage() {
                 if (!saleId) throw new Error("ID de vente manquant");
 
                 const res = await fetch(`http://localhost:5000/shop/sales/${saleId}/products`);
+
+                console.log(res);
+
                 if (!res.ok) throw new Error("Erreur lors du chargement des produits");
 
                 const data: Product[] = await res.json(); // contient saleName et is_active
@@ -61,8 +64,6 @@ export default function CartPage() {
     if (products.length === 0) return <p className="text-center mt-10">Aucun produit trouvé.</p>;
 
     const saleName = products[0].saleName; // récupère saleName depuis le premier produit
-    console.log(saleName);
-
     const saleIsActive = products[0].is_active; // récupère is_active depuis le premier produit
 
     return (
@@ -87,12 +88,24 @@ export default function CartPage() {
                         <h3 className="text-xl font-semibold text-white">{product.name}</h3>
                         <p className="text-gray-600">{product.price} €</p>
                         {product.image_url && (
-                            <img
-                                src={`http://localhost:5000${product.image_url}`}
-                                alt={product.name}
-                                className="w-full h-48 object-cover rounded mt-2"
-                            />
+                            product.image_url.toLowerCase().endsWith(".pdf") ? (
+                                <a
+                                    href={`http://localhost:5000${product.image_url}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="block mt-3 text-blue-400 underline hover:text-blue-600"
+                                >
+                                    📄 Voir le document PDF
+                                </a>
+                            ) : (
+                                <img
+                                    src={`http://localhost:5000${product.image_url}`}
+                                    alt={product.name}
+                                    className="w-full h-48 object-cover rounded mt-2"
+                                />
+                            )
                         )}
+
                         <p className="mt-2 text-sm text-white">{product.description}</p>
                         <button className="mt-3 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
                             onClick={() => (addToCart(product))}>

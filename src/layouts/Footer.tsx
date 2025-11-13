@@ -52,6 +52,30 @@ export default function Footer() {
                         </li>
                     </ul>
                 </div>
+                <div>
+                    <h4 className="text-lg font-semibold mb-4">Contactez-nous</h4>
+                    <p className="text-sm">
+                        Email:{" "}
+                        <a
+                            href="mailto:contact@apejacquescharpentreau.fr"
+                            className="hover:underline"
+                        >
+                            contact@apejacquescharpentreau.fr
+                        </a>
+                    </p>
+                </div>
+                <div>
+                    <h4 className="text-lg font-semibold mb-4">Politique de confidentialité</h4>
+                    <p className="text-sm">
+                        Consultez notre{" "}
+                        <a
+                            href="/privacy-policy"
+                            className="hover:underline"
+                        >
+                            politique de confidentialité
+                        </a>
+                    </p>
+                </div>
             </div>
             <div className="text-center text-sm py-4 bg-slate-800">
                 © 2025 Association de Parents d'Élèves – Tous droits réservés.

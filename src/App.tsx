@@ -18,6 +18,7 @@ import BackofficeClient from "./pages/BackofficeClient";
 import CreateSaleForm from "./components/CreateSaleForm";
 import Panier from "./pages/Panier";
 import ProfilePage from "./pages/ProfilePage";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 function App() {
   return (
@@ -79,6 +80,9 @@ function App() {
 
           {/* Route de profil */}
           <Route path="/profile" element={<ProfilePage />} />
+
+          {/* Page politique de confidentialité */}
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
         </Routes>
 

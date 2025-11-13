@@ -23,10 +23,12 @@ export default function EditSaleModal({ sale, onClose, onUpdated }: EditSaleModa
                 : new Date(sale.end_date).toISOString().split("T")[0]
             : ""
     );
-    const [isActive, setIsActive] = useState(sale.is_active);
+
+
     const [saleImageFile, setSaleImageFile] = useState<File | null>(null);
     const [products, setProducts] = useState<ProductInput[]>([]);
     const [loading, setLoading] = useState(false);
+    const [isActive, setIsActive] = useState(false);
 
     const token = localStorage.getItem("token");
 
@@ -60,6 +62,24 @@ export default function EditSaleModal({ sale, onClose, onUpdated }: EditSaleModa
 
         fetchProducts();
     }, [sale.id]);
+
+    // Met à jour isActive en fonction des dates
+    useEffect(() => {
+        if (startDate && endDate) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            end.setHours(23, 59, 59, 999); // inclure toute la journée de fin
+
+            setIsActive(today >= start && today <= end);
+        } else {
+            setIsActive(false);
+        }
+    }, [startDate, endDate]);
+
+
 
     const handleProductChange = (index: number, field: keyof ProductInput, value: any) => {
         setProducts((prev) => {
@@ -135,7 +155,7 @@ export default function EditSaleModal({ sale, onClose, onUpdated }: EditSaleModa
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+            <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-3xl max-h-[90vh] overflow-y-auto text-black">
                 <h2 className="text-xl font-semibold mb-4">Modifier la vente</h2>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -171,10 +191,6 @@ export default function EditSaleModal({ sale, onClose, onUpdated }: EditSaleModa
                     </div>
 
                     <div className="flex items-center gap-3">
-                        <label className="flex items-center gap-2">
-                            <input type="checkbox" checked={isActive} onChange={(e) => setIsActive(e.target.checked)} />
-                            <span className="text-sm">Active</span>
-                        </label>
 
                         <label className="text-sm">Nouvelle image</label>
                         <input type="file" accept="image/*" onChange={(e) => setSaleImageFile(e.target.files?.[0] || null)} />
@@ -215,7 +231,7 @@ export default function EditSaleModal({ sale, onClose, onUpdated }: EditSaleModa
                                         />
                                         <input
                                             type="file"
-                                            accept="image/*"
+                                            accept="image/*, .pdf"
                                             onChange={(e) => handleProductChange(i, "imageFile", e.target.files?.[0] || null)}
                                         />
                                     </div>
