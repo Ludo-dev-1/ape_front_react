@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
+import iziToast from "izitoast";
 
 type Role = { id: number; nom: string };
-type Parent = { nom: string; email: string; roles: Role[] };
+type Parent = { nom: string; email: string; roles: Role[]; userID: number };
 
 export default function BackofficeClient() {
     const [parents, setParents] = useState<Parent[]>([]);
@@ -20,11 +21,14 @@ export default function BackofficeClient() {
         })
             .then((res) => {
                 if (!res.ok) throw new Error(`Erreur ${res.status}`);
+
                 return res.json();
+
             })
             .then((data) => setParents(data))
             .catch((err) => setError(err.message));
     }, []);
+    console.log(parents);
 
     // Fonction pour modifier le rôle
     const handleEditRole = async (parentEmail: string, roleId: string) => {
@@ -46,8 +50,16 @@ export default function BackofficeClient() {
 
             if (!res.ok) throw new Error(`Erreur ${res.status}`);
 
+            iziToast.success({
+                title: "Succès",
+                message: "Rôle mis à jour avec succès",
+                position: "topRight",
+                timeout: 1500 // optionnel : toast disparaît après 1.5 sec
+            });
             // Recharge la page après la mise à jour
-            window.location.reload();
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
 
             const data = await res.json();
 
@@ -66,8 +78,55 @@ export default function BackofficeClient() {
             );
         } catch (err: any) {
             alert("Erreur lors de la mise à jour: " + err.message);
+            iziToast.error({
+                title: "Erreur",
+                message: "Erreur lors de la mise à jour: " + err.message,
+                position: "topRight",
+                timeout: 1500
+            });
         }
     };
+
+    const handleDeleteParent = async (parentEmail: string) => {
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) return alert("Token non trouvé.");
+
+            const res = await fetch(
+                `http://localhost:5000/admin/account/${parentEmail}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            if (!res.ok) throw new Error(`Erreur ${res.status}`);
+
+            iziToast.success({
+                title: "Succès",
+                message: "Utilisateur supprimé avec succès",
+                position: "topRight",
+                timeout: 1500 // optionnel : toast disparaît après 1.5 sec
+            });
+
+            // Recharge la page après 1.5 seconde
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
+
+        } catch (err: any) {
+            alert("Erreur lors de la suppression: " + err.message);
+            iziToast.error({
+                title: "Erreur",
+                message: "Erreur lors de la suppression: " + err.message,
+                position: "topRight",
+                timeout: 1500
+            });
+        }
+    };
+
 
     if (error) return <p>{error}</p>;
     if (!parents.length) return <p>Chargement...</p>;
@@ -89,6 +148,7 @@ export default function BackofficeClient() {
                             <th className="py-3 px-4 border-b text-left">Email</th>
                             <th className="py-3 px-4 border-b text-left">Rôle</th>
                             <th className="py-3 px-4 border-b text-left">Modifier</th>
+                            <th className="py-3 px-4 border-b text-left">Supprimer</th>
                         </tr>
                     </thead>
                     <tbody >
@@ -120,11 +180,20 @@ export default function BackofficeClient() {
                                             <option value="4">Membre_ape</option>
                                         </select>
                                     </td>
+                                    <td>
+
+                                        <button
+                                            onClick={() => handleDeleteParent(parent.email)}
+                                            className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 hover:scale-110 transition"
+                                        >
+                                            Supprimer
+                                        </button>
+                                    </td>
                                 </tr>
                             ))}
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div >
     );
 }

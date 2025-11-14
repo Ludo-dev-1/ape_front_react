@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { Product } from "../interfaces/shop";
 import useCartStore from "../stores/CartStore";
@@ -70,7 +70,7 @@ export default function CartPage() {
         <div className="container mx-auto px-4 mt-20 py-10 ">
             <h1 className="text-3xl font-bold mb-6 text-white">🛒 Vente : {saleName}</h1>
 
-            <div className="bg-gray-100 p-6 rounded-lg shadow-md mb-8">
+            <div className=" p-6 rounded-lg shadow-md mb-8 bg-slate-800">
                 <p>
                     <strong>Statut :</strong>{" "}
                     {saleIsActive ? (
@@ -107,16 +107,24 @@ export default function CartPage() {
                         )}
 
                         <p className="mt-2 text-sm text-white">{product.description}</p>
-                        <button className="mt-3 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-                            onClick={() => (addToCart(product))}>
-                            Ajouter au panier
-                        </button>
+
+                        {!(product.image_url && product.image_url.toLowerCase().endsWith(".pdf")) && (
+                            <button className="mt-3 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+                                onClick={() => (addToCart(product))}>
+                                Ajouter au panier
+                            </button>
+                        )}
                         <button className="mt-3 bg-red-600 ml-4 text-white px-4 py-2 rounded hover:bg-red-700 transition"
                             onClick={() => handleDeleteProduct(product.id)}>
                             Supprimer
                         </button>
                     </div>
                 ))}
+            </div>
+            <div className="mt-8">
+                <Link to="/boutique" className="text-gray-200 hover:bg-gray-700 px-4 py-2 rounded">
+                    ← Retour a la boutique
+                </Link>
             </div>
         </div>
     );

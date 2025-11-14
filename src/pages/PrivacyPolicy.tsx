@@ -1,16 +1,16 @@
 export default function PrivacyPolicy() {
     return (
-        <div className="max-w-5xl mx-auto px-6 py-12 text-gray-100">
+        <div className="max-w-5xl mx-auto px-6 py-12 text-gray-100 mt-20">
             <h1 className="text-3xl font-bold mb-4 text-blue-400">
                 Politique de confidentialité
             </h1>
             <p className="mb-6 text-sm text-gray-400">
-                Dernière mise à jour : <strong>[DATE]</strong>
+                Dernière mise à jour : <strong>14/11/2025</strong>
             </p>
 
             <p className="mb-8">
                 La présente politique de confidentialité explique comment{" "}
-                <strong>[NOM_DU_SITE]</strong> (ci-après « nous ») collecte, utilise,
+                <strong>https://ape-jacques-charpentreau.com</strong>  collecte, utilise,
                 partage et protège vos données personnelles conformément au Règlement
                 Général sur la Protection des Données (RGPD).
             </p>
@@ -20,14 +20,14 @@ export default function PrivacyPolicy() {
                     1. Responsable de traitement
                 </h2>
                 <p>
-                    Responsable : <strong>[NOM OU ENTITÉ]</strong>
+                    Responsable : <strong>Mr Thibaud Ludovic</strong>
                     <br />
                     Contact :{" "}
                     <a
                         href="mailto:[CONTACT@EXEMPLE.FR]"
                         className="text-blue-400 underline"
                     >
-                        [CONTACT@EXEMPLE.FR]
+                        contact@ape-jacques-charpentreau.com
                     </a>
                     <br />
                     Adresse : <strong>[ADRESSE]</strong>
@@ -191,16 +191,7 @@ export default function PrivacyPolicy() {
                 </p>
             </section>
 
-            <div className="mt-10 border-l-4 border-blue-400 bg-gray-800/40 p-4 rounded">
-                <p className="text-sm text-gray-300">
-                    🔧 À personnaliser avant publication :
-                </p>
-                <ul className="list-disc pl-6 text-sm text-gray-400 mt-1 space-y-1">
-                    <li>Remplacez [NOM_DU_SITE], [CONTACT@EXEMPLE.FR], [DATE], etc.</li>
-                    <li>Ajoutez vos prestataires (hébergeur, e-mail, paiement).</li>
-                    <li>Adaptez les durées de conservation selon vos besoins.</li>
-                </ul>
-            </div>
+
         </div>
     );
 }
