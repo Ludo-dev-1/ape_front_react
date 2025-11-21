@@ -37,7 +37,7 @@ export default function EditSaleModal({ sale, onClose, onUpdated }: EditSaleModa
         const fetchProducts = async () => {
             try {
                 const token = localStorage.getItem("token");
-                const res = await fetch(`http://localhost:5000/admin/sales/${sale.id}/products`, {
+                const res = await fetch(`https://ape-back-9jp6.onrender.com/admin/sales/${sale.id}/products`, {
                     method: "GET", headers: { Authorization: `Bearer ${token}` },
                 });
                 if (!res.ok) throw new Error("Erreur chargement produits");
@@ -133,7 +133,7 @@ export default function EditSaleModal({ sale, onClose, onUpdated }: EditSaleModa
                 }
             }
 
-            const res = await fetch(`http://localhost:5000/admin/sales/${sale.id}`, {
+            const res = await fetch(`https://ape-back-9jp6.onrender.com/admin/sales/${sale.id}`, {
                 method: "PATCH",
                 body: formData,
                 headers: {

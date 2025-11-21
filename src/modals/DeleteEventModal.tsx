@@ -13,7 +13,7 @@ const DeleteEventModal: React.FC<DeleteEventModalProps> = ({
 
     const handleDelete = async () => {
         try {
-            await fetch(`http://localhost:5000/bureau/events/${eventId}`, {
+            await fetch(`https://ape-back-9jp6.onrender.com/bureau/events/${eventId}`, {
                 method: "DELETE",
             });
             onEventDeleted();

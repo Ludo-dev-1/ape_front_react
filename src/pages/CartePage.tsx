@@ -16,7 +16,7 @@ export default function CartPage() {
             try {
                 if (!saleId) throw new Error("ID de vente manquant");
 
-                const res = await fetch(`http://localhost:5000/shop/sales/${saleId}/products`);
+                const res = await fetch(`https://ape-back-9jp6.onrender.com/shop/sales/${saleId}/products`);
 
                 console.log(res);
 
@@ -41,7 +41,7 @@ export default function CartPage() {
         if (!confirm("Voulez-vous vraiment supprimer ce produit ?")) return;
         try {
             const token = localStorage.getItem("token");
-            const res = await fetch(`http://localhost:5000/admin/products/${productId}`, {
+            const res = await fetch(`https://ape-back-9jp6.onrender.com/admin/products/${productId}`, {
                 method: "DELETE",
                 headers: { Authorization: `Bearer ${token}` },
             });
@@ -90,7 +90,7 @@ export default function CartPage() {
                         {product.image_url && (
                             product.image_url.toLowerCase().endsWith(".pdf") ? (
                                 <a
-                                    href={`http://localhost:5000${product.image_url}`}
+                                    href={`https://ape-back-9jp6.onrender.com${product.image_url}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="block mt-3 text-blue-400 underline hover:text-blue-600"
@@ -99,7 +99,7 @@ export default function CartPage() {
                                 </a>
                             ) : (
                                 <img
-                                    src={`http://localhost:5000${product.image_url}`}
+                                    src={`https://ape-back-9jp6.onrender.com${product.image_url}`}
                                     alt={product.name}
                                     className="w-full h-48 object-cover rounded mt-2"
                                 />

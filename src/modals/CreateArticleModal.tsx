@@ -24,7 +24,7 @@ export default function CreateArticleModal({ }: CreateArticleModalProps) {
                 formData.append("image", image);
             }
 
-            const res = await fetch("http://localhost:5000/bureau/articles", {
+            const res = await fetch("https://ape-back-9jp6.onrender.com/bureau/articles", {
                 method: "POST",
                 body: formData,
             });

@@ -13,7 +13,7 @@ const DeleteArticleModal: React.FC<DeleteArticleModalProps> = ({
 
     const handleDelete = async () => {
         try {
-            await fetch(`http://localhost:5000/bureau/articles/${articleId}`, {
+            await fetch(`https://ape-back-9jp6.onrender.com/bureau/articles/${articleId}`, {
                 method: "DELETE",
             });
             onArticleDeleted();

@@ -14,7 +14,7 @@ export default function News() {
     useEffect(() => {
         const fetchArticles = async () => {
             try {
-                const response = await fetch("http://localhost:5000/articles");
+                const response = await fetch("https://ape-back-9jp6.onrender.com/articles");
                 const data = await response.json();
                 setArticles(data);
             } catch (error) {
@@ -38,7 +38,7 @@ export default function News() {
                             <a href={`/news/${article.id}`}>
                                 <h3 className="text-xl font-semibold mb-2 text-slate-100">{article.titre}</h3>
                                 <p className="text-slate-300">{article.contenu_bref}</p>
-                                <img src={`http://localhost:5000${article.image}`} alt="" className="rounded-lg shadow-md max-h-[200px] object-cover my-4 w-full mx-auto" />
+                                <img src={`https://ape-back-9jp6.onrender.com${article.image}`} alt="" className="rounded-lg shadow-md max-h-[200px] object-cover my-4 w-full mx-auto" />
                             </a>
                         </article>
                     ))}

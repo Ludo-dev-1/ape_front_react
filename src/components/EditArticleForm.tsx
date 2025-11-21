@@ -51,7 +51,7 @@ const EditArticleForm: React.FC<EditArticleFormProps> = ({
 
         try {
             const response = await fetch(
-                `http://localhost:5000/bureau/articles/${articleId}`,
+                `https://ape-back-9jp6.onrender.com/bureau/articles/${articleId}`,
                 fetchOptions
             );
 

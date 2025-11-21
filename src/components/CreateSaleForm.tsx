@@ -90,7 +90,7 @@ export default function CreateSaleForm() {
                 }
             }
 
-            const res = await fetch(`http://localhost:5000/admin/sales`, {
+            const res = await fetch(`https://ape-back-9jp6.onrender.com/admin/sales`, {
                 method: "POST",
                 body: formData,
                 headers: {

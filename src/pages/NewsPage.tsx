@@ -13,7 +13,7 @@ export default function NewsPage() {
 
     const fetchArticles = async () => {
         try {
-            const response = await fetch("http://localhost:5000/articles");
+            const response = await fetch("https://ape-back-9jp6.onrender.com/articles");
             const data = await response.json();
             setArticles(data);
         } catch (error) {
@@ -60,7 +60,7 @@ export default function NewsPage() {
                                     {article.image && (
                                         <div>
                                             <img
-                                                src={`http://localhost:5000${article.image}`}
+                                                src={`https://ape-back-9jp6.onrender.com${article.image}`}
                                                 alt={article.titre}
                                                 className="w-full h-auto rounded max-h-48 object-cover"
                                             />

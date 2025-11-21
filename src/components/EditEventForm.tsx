@@ -52,7 +52,7 @@ const EditEventForm: React.FC<EditEventFormProps> = ({
 
         try {
             const response = await fetch(
-                `http://localhost:5000/bureau/events/${eventId}`,
+                `https://ape-back-9jp6.onrender.com/bureau/events/${eventId}`,
                 fetchOptions
             );
 

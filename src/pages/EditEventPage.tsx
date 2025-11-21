@@ -18,7 +18,7 @@ export default function EditEventPage() {
     useEffect(() => {
         const fetchEvent = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/event/${id}`);
+                const response = await fetch(`https://ape-back-9jp6.onrender.com/event/${id}`);
                 const data = await response.json();
                 setEvent(data);
             } catch (error) {

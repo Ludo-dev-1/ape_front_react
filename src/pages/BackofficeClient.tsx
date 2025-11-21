@@ -16,7 +16,7 @@ export default function BackofficeClient() {
             return;
         }
 
-        fetch("http://localhost:3000/admin/backoffice", {
+        fetch("https://ape-back-9jp6.onrender.com/admin/backoffice", {
             headers: { Authorization: `Bearer ${token}` },
         })
             .then((res) => {
@@ -37,7 +37,7 @@ export default function BackofficeClient() {
             if (!token) return alert("Token non trouvé.");
 
             const res = await fetch(
-                `http://localhost:3000/admin/backoffice/update-role/${parentEmail}`,
+                `https://ape-back-9jp6.onrender.com/admin/backoffice/update-role/${parentEmail}`,
                 {
                     method: "PUT",
                     headers: {

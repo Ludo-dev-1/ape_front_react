@@ -14,7 +14,7 @@ export default function MonthEvent() {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const response = await fetch("http://localhost:5000/events");
+                const response = await fetch("https://ape-back-9jp6.onrender.com/events");
                 const data = await response.json();
                 console.log("Events fetched:", data);
                 setEvents(data);
@@ -51,7 +51,7 @@ export default function MonthEvent() {
 
                             {event.image && (
                                 <img
-                                    src={`http://localhost:5000${event.image}`}
+                                    src={`https://ape-back-9jp6.onrender.com${event.image}`}
                                     alt={`Image de l'événement ${event.titre}`}
                                     className="rounded-lg shadow-md max-h-[450px] object-cover mb-4 w-full mx-auto"
                                 />

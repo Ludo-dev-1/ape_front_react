@@ -17,8 +17,8 @@ export default function ShopPage() {
 
             const token = localStorage.getItem("token");
             let url = role === "1"
-                ? "http://localhost:5000/admin/sales"
-                : "http://localhost:5000/shop/sales";
+                ? "https://ape-back-9jp6.onrender.com/admin/sales"
+                : "https://ape-back-9jp6.onrender.com/shop/sales";
 
             const response = await fetch(url, {
                 headers: {

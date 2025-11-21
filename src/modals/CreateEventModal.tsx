@@ -24,7 +24,7 @@ export default function CreateEventModal({ }: CreateEventModalProps) {
                 formData.append("image", image);
             }
 
-            const res = await fetch("http://localhost:5000/bureau/events", {
+            const res = await fetch("https://ape-back-9jp6.onrender.com/bureau/events", {
                 method: "POST",
                 body: formData,
             });

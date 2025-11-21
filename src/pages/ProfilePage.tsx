@@ -26,7 +26,7 @@ export default function ProfilePage() {
                 const token = localStorage.getItem("token");
                 if (!token) throw new Error("Token non trouvé");
 
-                const res = await fetch("http://localhost:3000/auth/profile", {
+                const res = await fetch("https://ape-back-9jp6.onrender.com/auth/profile", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",

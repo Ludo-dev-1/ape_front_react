@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://localhost:5000", // <-- adapte si besoin
+    baseURL: "https://ape-back-9jp6.onrender.com", // <-- adapte si besoin
     // timeout: 10000
 });
 
