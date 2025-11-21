@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import apeLogo from "../assets/apeLogo.jpg";
 import { Link, useLocation } from "react-router";
 
@@ -52,8 +52,8 @@ export default function Header() {
                 {/* Navigation */}
                 <nav
                     className={`${menuOpen
-                            ? "absolute top-full left-0 w-full bg-slate-900 flex flex-col items-center py-4 space-y-4 lg:hidden"
-                            : "hidden lg:flex lg:flex-row lg:space-x-6"
+                        ? "absolute top-full left-0 w-full bg-slate-900 flex flex-col items-center py-4 space-y-4 lg:hidden"
+                        : "hidden lg:flex lg:flex-row lg:space-x-6"
                         } text-lg font-medium`}
                 >
                     <ul className="flex flex-col items-center lg:flex-row lg:space-x-6">

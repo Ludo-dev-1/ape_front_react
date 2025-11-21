@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 interface CreateEventModalProps {
     onEventCreated: (event: any) => void;
 }
 
-export default function CreateEventModal({ onEventCreated }: CreateEventModalProps) {
+export default function CreateEventModal({ }: CreateEventModalProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [titre, setTitre] = useState("");
     const [description, setDescription] = useState("");

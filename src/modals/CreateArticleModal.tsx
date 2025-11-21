@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 interface CreateArticleModalProps {
     onArticleCreated: (article: any) => void;
 }
 
-export default function CreateArticleModal({ onArticleCreated }: CreateArticleModalProps) {
+export default function CreateArticleModal({ }: CreateArticleModalProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [titre, setTitre] = useState("");
     const [contenu_bref, setContenuBref] = useState("");
