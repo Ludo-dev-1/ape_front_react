@@ -24,8 +24,10 @@ function App() {
   return (
     <>
 
-      <section className="bg-slate-950 box-border outline-none p-0 decoration-none list-none scroll-smooth">
+      <section className="bg-slate-950 box-border outline-none p-0 decoration-none list-none scroll-smooth min-h-screen flex flex-col">
+
         <Header />
+
 
         <Routes>
           {/* Page d'accueil */}
@@ -85,6 +87,7 @@ function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
         </Routes>
+
 
         <Footer />
       </section>

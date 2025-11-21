@@ -38,35 +38,25 @@ export default function Header() {
                     <img src={apeLogo} alt="Logo Association" className="w-12 h-12" />
                 </Link>
 
-                {/* Bouton menu mobile */}
+                {/* Bouton menu mobile (visible <1024px) */}
                 <button
                     onClick={() => setMenuOpen(!menuOpen)}
-                    className="md:hidden focus:outline-none"
+                    className="lg:hidden focus:outline-none"
                     aria-label="Ouvrir le menu"
                 >
-                    <svg
-                        className="w-6 h-6 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M4 6h16M4 12h16M4 18h16"
-                        />
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
 
-                {/* Navigation principale */}
+                {/* Navigation */}
                 <nav
                     className={`${menuOpen
-                            ? "absolute top-20 left-0 w-full bg-slate-900 flex flex-col items-center py-4 space-y-4 md:space-y-0 md:py-0 md:flex md:flex-row md:justify-end md:bg-transparent"
-                            : "hidden md:flex md:flex-row md:justify-end"
+                            ? "absolute top-full left-0 w-full bg-slate-900 flex flex-col items-center py-4 space-y-4 lg:hidden"
+                            : "hidden lg:flex lg:flex-row lg:space-x-6"
                         } text-lg font-medium`}
                 >
-                    <ul className="flex flex-col md:flex-row md:space-x-6 text-center">
+                    <ul className="flex flex-col items-center lg:flex-row lg:space-x-6">
                         <li>
                             <Link to="/" className={isActive("/")}>
                                 Accueil
@@ -82,7 +72,6 @@ export default function Header() {
                                 Événements
                             </Link>
                         </li>
-
                         {user.role ? (
                             <>
                                 <li>
@@ -108,10 +97,7 @@ export default function Header() {
                                     </li>
                                 )}
                                 <li>
-                                    <button
-                                        onClick={handleLogout}
-                                        className="hover:text-blue-600 cursor-pointer"
-                                    >
+                                    <button onClick={handleLogout} className="hover:text-blue-600 cursor-pointer">
                                         Déconnexion
                                     </button>
                                 </li>
@@ -134,5 +120,6 @@ export default function Header() {
                 </nav>
             </div>
         </header>
+
     );
 }

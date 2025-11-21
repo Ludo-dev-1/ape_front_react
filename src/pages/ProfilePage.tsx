@@ -26,7 +26,7 @@ export default function ProfilePage() {
                 const token = localStorage.getItem("token");
                 if (!token) throw new Error("Token non trouvé");
 
-                const res = await fetch("http://localhost:5000/auth/profile", {
+                const res = await fetch("http://localhost:3000/auth/profile", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -73,7 +73,7 @@ export default function ProfilePage() {
         setChanging(true);
         const token = localStorage.getItem("token");
         try {
-            const res = await fetch("http://localhost:5000/auth/change-password", {
+            const res = await fetch("http://localhost:3000/auth/change-password", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

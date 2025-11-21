@@ -26,7 +26,7 @@ export default function News() {
     }, []);
 
     return (
-        <section className="bg-slate-900 py-28">
+        <section className="bg-slate-900 py-28 w-full">
             <div className="container mx-auto  ">
                 <h2 className="text-4xl font-semibold mb-24 text-white text-center">Dernières actualités</h2>
                 <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center transition">

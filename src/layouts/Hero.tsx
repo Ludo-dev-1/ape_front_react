@@ -2,7 +2,7 @@ import apeLogo from "../assets/apeLogo.jpg";
 
 export default function Hero() {
     return (
-        <section className="bg-slate-950 py-28 mb-12 text-white">
+        <section className="bg-slate-950 py-28 mb-12 text-white w-10/12 mx-auto">
             <div className="container mx-auto px-4 flex flex-col-reverse md:flex-row items-center gap-10">
                 <div className="md:w-1/2">
                     <h1 className="text-5xl font-bold mb-4">

@@ -16,7 +16,7 @@ export default function BackofficeClient() {
             return;
         }
 
-        fetch("http://localhost:5000/admin/backoffice", {
+        fetch("http://localhost:3000/admin/backoffice", {
             headers: { Authorization: `Bearer ${token}` },
         })
             .then((res) => {
@@ -37,7 +37,7 @@ export default function BackofficeClient() {
             if (!token) return alert("Token non trouvé.");
 
             const res = await fetch(
-                `http://localhost:5000/admin/backoffice/update-role/${parentEmail}`,
+                `http://localhost:3000/admin/backoffice/update-role/${parentEmail}`,
                 {
                     method: "PUT",
                     headers: {
