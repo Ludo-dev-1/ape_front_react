@@ -84,8 +84,8 @@ export default function News() {
 
                                     {article.image && (
                                         <img
-                                            src={`https://ape-back-9jp6.onrender.com${article.image}`}
-                                            alt=""
+                                            src={article.image}
+                                            alt={`Image de l'article ${article.titre}`}
                                             className="rounded-lg shadow-md max-h-[200px] object-cover my-4 w-full mx-auto"
                                         />
                                     )}
