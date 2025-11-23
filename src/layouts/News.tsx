@@ -68,10 +68,12 @@ export default function News() {
 
                                 {article.image && (
                                     <img
-                                        src={`https://ape-back-9jp6.onrender.com${article.image}`}
+                                        src={article.image
+                                            ? `${import.meta.env.VITE_API_URL}/uploads/${article.image}`
+                                            : "/placeholder.jpg"}
                                         alt=""
-                                        className="rounded-lg shadow-md max-h-[200px] object-cover my-4 w-full"
                                     />
+
                                 )}
                             </Link>
                         </article>
