@@ -9,9 +9,8 @@ type Article = {
 };
 
 export default function News() {
-    const [articles, setArticles] = useState<Article[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+    const [articles, setArticles] = useState<Article[] | null>(null); // null = pas encore chargé
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         const fetchArticles = async () => {
@@ -24,17 +23,16 @@ export default function News() {
 
                 const data = await response.json();
 
-                // Vérification : data doit être un tableau
                 if (!Array.isArray(data)) {
-                    throw new Error("Format de données invalide");
+                    setArticles([]);
+                } else {
+                    setArticles(data);
                 }
 
-                setArticles(data);
-            } catch (error: any) {
+            } catch (error) {
                 console.error("Erreur lors du chargement des articles :", error);
-                setError(error.message || "Une erreur est survenue");
-            } finally {
-                setLoading(false);
+                setError(true);
+                setArticles([]);
             }
         };
 
@@ -48,52 +46,54 @@ export default function News() {
                     Dernières actualités
                 </h2>
 
-                {/* Loader */}
-                {loading && (
-                    <p className="text-center text-white text-lg">Chargement...</p>
+                {/* Chargement */}
+                {articles === null && (
+                    <p className="text-center text-white">Chargement…</p>
                 )}
 
-                {/* Message d’erreur */}
+                {/* Erreur API */}
                 {error && (
-                    <p className="text-center text-red-400 text-lg">
-                        {error}
+                    <p className="text-center text-red-400">
+                        Impossible de charger les actualités.
                     </p>
                 )}
 
                 {/* Aucun article */}
-                {!loading && !error && articles.length === 0 && (
-                    <p className="text-center text-slate-300 text-lg">
+                {articles && articles.length === 0 && !error && (
+                    <p className="text-center text-slate-300">
                         Aucun article disponible pour le moment.
                     </p>
                 )}
 
-                {/* Liste des articles */}
-                <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center transition">
-                    {articles.slice(0, 3).map((article) => (
-                        <article
-                            key={article.id}
-                            className="bg-slate-800 p-6 rounded-lg shadow w-full text-white transition delay-50 duration-200 ease-in-out hover:scale-105 hover:bg-slate-700 hover:shadow-md max-w-sm"
-                        >
-                            <Link to={`/news/${article.id}`}>
-                                <h3 className="text-xl font-semibold mb-2 text-slate-100">
-                                    {article.titre}
-                                </h3>
+                {/* Affichage des articles */}
+                {articles && articles.length > 0 && (
+                    <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center transition">
+                        {articles.slice(0, 3).map((article) => (
+                            <article
+                                key={article.id}
+                                className="bg-slate-800 p-6 rounded-lg shadow w-full text-white transition delay-50 duration-200 ease-in-out hover:scale-105 hover:bg-slate-700 hover:shadow-md max-w-sm"
+                            >
+                                <Link to={`/news/${article.id}`}>
+                                    <h3 className="text-xl font-semibold mb-2 text-slate-100">
+                                        {article.titre}
+                                    </h3>
 
-                                <p className="text-slate-300">
-                                    {article.contenu_bref}
-                                </p>
+                                    <p className="text-slate-300">
+                                        {article.contenu_bref}
+                                    </p>
 
-                                {article.image && (
-                                    <img
-                                        src={`https://ape-back-9jp6.onrender.com${article.image}`}
-                                        alt={article.titre}
-                                        className="rounded-lg shadow-md max-h-[200px] object-cover my-4 w-full mx-auto"
-                                    />
-                                )}
-                            </Link>
-                        </article>
-                    ))}
-                </div>
+                                    {article.image && (
+                                        <img
+                                            src={`https://ape-back-9jp6.onrender.com${article.image}`}
+                                            alt=""
+                                            className="rounded-lg shadow-md max-h-[200px] object-cover my-4 w-full mx-auto"
+                                        />
+                                    )}
+                                </Link>
+                            </article>
+                        ))}
+                    </div>
+                )}
 
                 <div className="mt-6 text-center">
                     <Link
