@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import CreateEventButton from "../components/CreateEventButton";
+import { Link } from "react-router";
 
 type Event = {
     id: number;
@@ -59,7 +60,7 @@ export default function EventsPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {events.map((event) => (
                             <div key={event.id} className="bg-slate-800 p-6 rounded-lg shadow-md">
-                                <a href={`/events/${event.id}`}>
+                                <Link to={`/events/${event.id}`}>
                                     <h2 className="text-xl font-semibold mb-2 text-slate-100">{event.titre}</h2>
                                     <p className="text-gray-300 mb-4 h-20 overflow-hidden">
                                         {event.description.slice(0, 70)}...
@@ -73,7 +74,7 @@ export default function EventsPage() {
                                         />
                                     )}
 
-                                </a>
+                                </Link>
                             </div>
                         ))}
                     </div>
