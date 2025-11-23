@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Footer() {
     return (
         <footer className="bg-slate-800 text-white mt-12">
@@ -6,24 +8,24 @@ export default function Footer() {
                     <h4 className="text-lg font-semibold mb-4">Navigation</h4>
                     <ul className="space-y-2 text-sm">
                         <li>
-                            <a href="/" className="hover:underline">
+                            <Link to="/" className="hover:underline">
                                 Accueil
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="/news" className="hover:underline">
+                            <Link to="/news" className="hover:underline">
                                 Actualités
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="/events" className="hover:underline">
+                            <Link to="/events" className="hover:underline">
                                 Événements
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="/contact" className="hover:underline">
+                            <Link to="/contact" className="hover:underline">
                                 Contact
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>
@@ -31,24 +33,24 @@ export default function Footer() {
                     <h4 className="text-lg font-semibold mb-4">Suivez-nous</h4>
                     <ul className="space-y-2 text-sm">
                         <li>
-                            <a
-                                href="https://www.facebook.com/profile.php?id=61567893013673"
+                            <Link
+                                to="https://www.facebook.com/profile.php?id=61567893013673"
                                 className="hover:underline"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 Facebook
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a
-                                href="https://www.instagram.com/apejacquescharpentreau/"
+                            <Link
+                                to="https://www.instagram.com/apejacquescharpentreau/"
                                 className="hover:underline"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 Instagram
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>
@@ -56,24 +58,24 @@ export default function Footer() {
                     <h4 className="text-lg font-semibold mb-4">Contactez-nous</h4>
                     <p className="text-sm">
                         Email:{" "}
-                        <a
-                            href="mailto:contact@apejacquescharpentreau.fr"
+                        <Link
+                            to="mailto:contact@apejacquescharpentreau.fr"
                             className="hover:underline"
                         >
                             contact@apejacquescharpentreau.fr
-                        </a>
+                        </Link >
                     </p>
                 </div>
                 <div>
                     <h4 className="text-lg font-semibold mb-4">Politique de confidentialité</h4>
                     <p className="text-sm">
                         Consultez notre{" "}
-                        <a
-                            href="/privacy-policy"
+                        <Link
+                            to="/privacy-policy"
                             className="hover:underline"
                         >
                             politique de confidentialité
-                        </a>
+                        </Link>
                     </p>
                 </div>
             </div>

@@ -35,11 +35,11 @@ export default function News() {
                             key={article.id}
                             className="bg-slate-800 p-6 rounded-lg shadow w-full text-white transition delay-50 duration-200 ease-in-out hover:scale-105 hover:bg-slate-700 hover:shadow-md max-w-sm"
                         >
-                            <a href={`/news/${article.id}`}>
+                            <Link to={`/news/${article.id}`}>
                                 <h3 className="text-xl font-semibold mb-2 text-slate-100">{article.titre}</h3>
                                 <p className="text-slate-300">{article.contenu_bref}</p>
                                 <img src={`https://ape-back-9jp6.onrender.com${article.image}`} alt="" className="rounded-lg shadow-md max-h-[200px] object-cover my-4 w-full mx-auto" />
-                            </a>
+                            </Link>
                         </article>
                     ))}
                 </div>

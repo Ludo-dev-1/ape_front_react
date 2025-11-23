@@ -18,7 +18,7 @@ export default function ArticlePage() {
     useEffect(() => {
         const fetchArticle = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/article/${id}`);
+                const response = await fetch(`https://ape-back-9jp6.onrender.com/article/${id}`);
                 const data = await response.json();
                 setArticle(data);
             } catch (error) {

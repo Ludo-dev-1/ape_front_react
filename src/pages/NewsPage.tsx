@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import CreateArticleButton from "../components/CreateArticleButton";
+import { Link } from "react-router-dom";
 
 type Article = {
     id: number;
@@ -52,7 +53,8 @@ export default function NewsPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {articles.map((article) => (
                             <div key={article.id} className="bg-slate-800 p-6 rounded-lg shadow-md">
-                                <a href={`/news/${article.id}`}>
+                                <Link to={`/news/${article.id}`}>
+
                                     <h2 className="text-xl font-semibold mb-2 text-slate-100">{article.titre}</h2>
                                     <p className="text-slate-300 mb-4 h-20 overflow-hidden">
                                         {article.contenu.slice(0, 100)}...
@@ -66,7 +68,8 @@ export default function NewsPage() {
                                             />
                                         </div>
                                     )}
-                                </a>
+
+                                </Link>
                             </div>
                         ))}
                     </div>
