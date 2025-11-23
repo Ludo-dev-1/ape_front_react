@@ -9,7 +9,7 @@ type Event = {
 };
 
 export default function MonthEvent() {
-    const [events, setEvents] = useState<Event[]>([]);
+    const [, setEvents] = useState<Event[]>([]);
     const [eventDuMois, setEventDuMois] = useState<Event | null>(null);
 
     useEffect(() => {
