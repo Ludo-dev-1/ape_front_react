@@ -67,7 +67,7 @@ export default function EventsPage() {
                                     <p>Prévu pour le {new Date(event.date_event).toLocaleDateString()}</p>
                                     {event.image && (
                                         <img
-                                            src={`http://localhost:5000${event.image}`}
+                                            src={`https://ape-back-9jp6.onrender.com/uploads/${event.image}`}
                                             alt={`Image de l'événement ${event.titre}`}
                                             className="w-full h-auto rounded max-h-48 object-cover mt-2"
                                         />
