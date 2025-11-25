@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import type { CartState } from "../interfaces/shop";
 import type { Product } from "../interfaces/shop";
+
 // Charge le panier depuis le localStorage
 const loadCartFromStorage = (): Product[] => {
     const storedCart = localStorage.getItem("cart");
@@ -14,11 +15,18 @@ const useCartStore = create<CartState>((set) => ({
     // Ajoute un produit au panier
     addToCart: (product: Product) =>
         set((state) => {
+
             const existingItem = state.cart.find((item) => item.id === product.id);
             let updatedCart;
 
+            // --- correction : l'URL de l'image est directement celle de Supabase ---
+            const resolvedImage =
+                product.image_url && product.image_url.trim() !== ""
+                    ? product.image_url
+                    : "/images/default.png";
+
             if (existingItem) {
-                // Si le produit existe déjà, augmente la quantité
+                // Produit existant → augmente la quantité
                 updatedCart = state.cart.map((item) =>
                     item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
                 );
@@ -28,14 +36,12 @@ const useCartStore = create<CartState>((set) => ({
                     {
                         ...product,
                         quantity: 1,
-                        image: product.image_url
-                            ? `${import.meta.env.VITE_API_URL}/uploads/${product.image_url}`
-                            : "/images/default.png",
+                        image: resolvedImage, // <--- plus de /uploads/
                     },
                 ];
             }
 
-            localStorage.setItem("cart", JSON.stringify(updatedCart)); // Mise à jour du stockage
+            localStorage.setItem("cart", JSON.stringify(updatedCart));
             return { cart: updatedCart };
         }),
 
@@ -47,17 +53,19 @@ const useCartStore = create<CartState>((set) => ({
             return { cart: updatedCart };
         }),
 
-    // Modifie la quantité d'un produit
+    // Modifie la quantité
     updateQuantity: (productId: string, newQuantity: number) =>
         set((state) => {
             const updatedCart = state.cart.map((item) =>
-                item.id === Number(productId) ? { ...item, quantity: Math.max(1, newQuantity) } : item
+                item.id === Number(productId)
+                    ? { ...item, quantity: Math.max(1, newQuantity) }
+                    : item
             );
             localStorage.setItem("cart", JSON.stringify(updatedCart));
             return { cart: updatedCart };
         }),
 
-    // Vide complètement le panier
+    // Vide le panier
     clearCart: () =>
         set(() => {
             localStorage.removeItem("cart");
