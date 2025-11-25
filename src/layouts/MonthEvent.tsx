@@ -75,7 +75,8 @@ export default function MonthEvent() {
                                     day: "numeric",
                                 })}
                             </p>
-                            {eventDuMois.image && (
+                            {eventDuMois.image && eventDuMois.image.includes("uploads") && (
+
                                 <img
                                     src={eventDuMois.image}
                                     alt={eventDuMois.titre}
