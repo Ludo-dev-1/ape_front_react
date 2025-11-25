@@ -50,7 +50,12 @@ export default function Panier() {
                         <tr key={item.id}>
                             <td className="border-b p-2 flex items-center gap-4">
                                 <img
-                                    src={`${import.meta.env.VITE_API_URL}${item.image_url}`}
+                                    src={
+                                        item.image_url && !item.image_url.includes("undefined")
+                                            ? item.image_url
+                                            : "/images/default.png"
+                                    }
+
                                     alt={item.name}
                                     className="w-16 h-16 object-cover rounded"
                                 />
