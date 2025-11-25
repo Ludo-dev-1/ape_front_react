@@ -134,7 +134,7 @@ export default function BackofficeClient() {
     const currentUserEmail = localStorage.getItem("userEmail") || "";
 
     return (
-        <div className="w-full px-2 sm:px-6 lg:px-8 pt-16">
+        <div className="w-full px-2 sm:px-6 lg:px-8 pt-16 min-h-screen">
             <h1 className="text-3xl md:text-4xl font-bold mt-20 text-center text-white">
                 Gestion des utilisateurs
             </h1>
