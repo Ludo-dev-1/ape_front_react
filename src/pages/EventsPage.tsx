@@ -71,8 +71,6 @@ export default function EventsPage() {
                                         alt={event.titre}
                                         className="w-full h-auto rounded max-h-48 object-cover mt-2"
                                     />
-
-
                                 </Link>
                             </div>
                         ))}
