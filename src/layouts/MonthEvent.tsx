@@ -77,7 +77,7 @@ export default function MonthEvent() {
                             </p>
                             {eventDuMois.image && (
                                 <img
-                                    src={`https://ape-back-9jp6.onrender.com${eventDuMois.image}`}
+                                    src={eventDuMois.image}
                                     alt={eventDuMois.titre}
                                     className="rounded-lg shadow-md max-h-[450px] object-cover mb-4 w-full mx-auto"
                                 />

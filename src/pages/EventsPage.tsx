@@ -66,13 +66,12 @@ export default function EventsPage() {
                                         {event.description.slice(0, 70)}...
                                     </p>
                                     <p>Prévu pour le {new Date(event.date_event).toLocaleDateString()}</p>
-                                    {event.image && (
-                                        <img
-                                            src={event.image}
-                                            alt={`Image de l'événement ${event.titre}`}
-                                            className="w-full h-auto rounded max-h-48 object-cover mt-2"
-                                        />
-                                    )}
+                                    <img
+                                        src={event.image || "/images/default.png"}
+                                        alt={event.titre}
+                                        className="w-full h-auto rounded max-h-48 object-cover mt-2"
+                                    />
+
 
                                 </Link>
                             </div>
