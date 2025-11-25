@@ -47,7 +47,7 @@ export default function EventsPage() {
     return (
         <>
 
-            <section className="bg-slate-950 py-12">
+            <section className="bg-slate-950 py-12 min-h-screen">
                 <div className="container mx-auto mt-16 px-4">
                     <h1 className="text-3xl font-bold mb-6 text-white">Nos événements</h1>
                     <p className="text-gray-300 mb-4">
