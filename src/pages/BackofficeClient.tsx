@@ -93,7 +93,7 @@ export default function BackofficeClient() {
             if (!token) return alert("Token non trouvé.");
 
             const res = await fetch(
-                `http://localhost:5000/admin/account/${parentEmail}`,
+                `https://ape-back-9jp6.onrender.com/admin/account/${parentEmail}`,
                 {
                     method: "DELETE",
                     headers: {

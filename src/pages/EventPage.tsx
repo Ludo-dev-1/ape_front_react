@@ -54,7 +54,7 @@ export default function EventDetailPage() {
                     </div>
                     {event.image && (
                         <img
-                            src={`https://ape-back-9jp6.onrender.com${event.image}`}
+                            src={event.image && !event.image.includes("undefined") ? event.image : "/images/default.png"}
                             alt={`Image de ${event.titre}`}
                             className="mt-6 w-full h-auto rounded-lg shadow-md"
                         />

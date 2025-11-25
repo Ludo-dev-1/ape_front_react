@@ -53,7 +53,7 @@ export default function ArticlePage() {
                     {article.image && (
                         <div>
                             <img
-                                src={`http://localhost:5000${article.image}`}
+                                src={article.image && !article.image.includes("undefined") ? article.image : "/images/default.png"}
                                 alt={`Image de ${article.titre}`}
                                 className="mt-6 w-full h-auto rounded-lg shadow-md"
                             />

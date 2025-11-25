@@ -106,7 +106,7 @@ export default function ShopPage() {
                         <Link to={`/cart/${sale.id}`} key={sale.id}>
                             {sale.picture && (
                                 <img
-                                    src={`http://localhost:5000${sale.picture}`}
+                                    src={sale.picture && !sale.picture.includes("undefined") ? sale.picture : "/images/default.png"}
                                     alt={`Image de la vente ${sale.name}`}
                                     className="w-full h-48 object-cover rounded mt-3"
                                 />

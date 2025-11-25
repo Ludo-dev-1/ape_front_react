@@ -62,7 +62,7 @@ export default function NewsPage() {
                                     {article.image && (
                                         <div>
                                             <img
-                                                src={`https://ape-back-9jp6.onrender.com${article.image}`}
+                                                src={article.image && !article.image.includes("undefined") ? article.image : "/images/default.png"}
                                                 alt={article.titre}
                                                 className="w-full h-auto rounded max-h-48 object-cover"
                                             />

@@ -244,7 +244,7 @@ export default function EditSaleModal({ sale, onClose, onUpdated }: EditSaleModa
                                     />
                                     {prod.image_url && !prod.imageFile && (
                                         <img
-                                            src={`http://localhost:5000${prod.image_url}`}
+                                            src={prod.image_url}
                                             alt="Produit existant"
                                             className="w-24 h-24 mt-2 object-cover rounded"
                                         />

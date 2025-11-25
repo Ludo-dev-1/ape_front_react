@@ -89,17 +89,17 @@ export default function CartPage() {
                         <p className="text-gray-600">{product.price} €</p>
                         {product.image_url && (
                             product.image_url.toLowerCase().endsWith(".pdf") ? (
-                                <a
-                                    href={`https://ape-back-9jp6.onrender.com${product.image_url}`}
+                                <Link
+                                    to={product.image_url}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="block mt-3 text-blue-400 underline hover:text-blue-600"
                                 >
                                     📄 Voir le document PDF
-                                </a>
+                                </Link>
                             ) : (
                                 <img
-                                    src={`https://ape-back-9jp6.onrender.com${product.image_url}`}
+                                    src={product.image_url}
                                     alt={product.name}
                                     className="w-full h-48 object-cover rounded mt-2"
                                 />
