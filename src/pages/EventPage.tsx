@@ -54,8 +54,8 @@ export default function EventDetailPage() {
                     </div>
                     {event.image && (
                         <img
-                            src={event.image && !event.image.includes("undefined") ? event.image : "/images/default.png"}
-                            alt={`Image de ${event.titre}`}
+                            src={event.image ? event.image : "https://placehold.co/800x400?text=Pas+d'image"}
+                            alt={event.titre}
                             className="mt-6 w-full h-auto rounded-lg shadow-md"
                         />
                     )}

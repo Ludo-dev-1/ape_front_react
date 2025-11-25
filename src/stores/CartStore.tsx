@@ -35,7 +35,7 @@ const useCartStore = create<CartState>((set) => ({
                     {
                         ...product,
                         quantity: 1,
-                        image: resolvedImage, // <-- FINI les /uploads/
+                        image: resolvedImage,
                     },
                 ];
             }

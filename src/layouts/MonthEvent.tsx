@@ -75,11 +75,16 @@ export default function MonthEvent() {
                                     day: "numeric",
                                 })}
                             </p>
-                            {eventDuMois.image && eventDuMois.image.includes("uploads") && (
-
+                            {eventDuMois.image ? (
                                 <img
                                     src={eventDuMois.image}
                                     alt={eventDuMois.titre}
+                                    className="rounded-lg shadow-md max-h-[450px] object-cover mb-4 w-full mx-auto"
+                                />
+                            ) : (
+                                <img
+                                    src="https://placehold.co/600x400?text=Pas+d'image"
+                                    alt="Image par défaut"
                                     className="rounded-lg shadow-md max-h-[450px] object-cover mb-4 w-full mx-auto"
                                 />
                             )}

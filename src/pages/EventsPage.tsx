@@ -67,7 +67,7 @@ export default function EventsPage() {
                                     </p>
                                     <p>Prévu pour le {new Date(event.date_event).toLocaleDateString()}</p>
                                     <img
-                                        src={event.image || "/images/default.png"}
+                                        src={event.image ?? "https://placehold.co/600x400?text=Pas+d'image"}
                                         alt={event.titre}
                                         className="w-full h-auto rounded max-h-48 object-cover mt-2"
                                     />
