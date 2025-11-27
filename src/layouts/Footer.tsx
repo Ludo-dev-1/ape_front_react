@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 
+const token = localStorage.getItem("token");
+
 export default function Footer() {
     return (
         <footer className="bg-slate-800 text-white mt-12">
@@ -22,16 +24,25 @@ export default function Footer() {
                                 Événements
                             </Link>
                         </li>
-                        <li>
-                            <Link to="/login" className="hover:underline">
-                                Connexion
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/register" className="hover:underline">
-                                Inscription
-                            </Link>
-                        </li>
+                        {token && (
+                            <li>
+                                <Link to="/profile" className="hover:underline">Profil</Link>
+                            </li>
+                        )}
+                        {!token && (
+                            <>
+                                <li>
+                                    <Link to="/login" className="hover:underline">
+                                        Connexion
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/register" className="hover:underline">
+                                        Inscription
+                                    </Link>
+                                </li>
+                            </>
+                        )}
                     </ul>
                 </div>
                 <div>

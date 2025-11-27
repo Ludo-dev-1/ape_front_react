@@ -52,7 +52,7 @@ export default function ShopPage() {
 
         try {
             const token = localStorage.getItem("token");
-            const res = await fetch(`http://localhost:5000/admin/sales/${saleId}`, {
+            const res = await fetch(`https://ape-back-9jp6.onrender.com/admin/sales/${saleId}`, {
                 method: "DELETE",
                 headers: { Authorization: `Bearer ${token}` },
             });

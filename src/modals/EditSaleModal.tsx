@@ -4,7 +4,7 @@ import type { Sale, ProductInput } from "../interfaces/shop";
 interface EditSaleModalProps {
     sale: Sale;
     onClose: () => void;
-    onUpdated: () => void; // callback pour recharger la liste après édition
+    onUpdated: () => void;
 }
 
 export default function EditSaleModal({ sale, onClose, onUpdated }: EditSaleModalProps) {
@@ -13,17 +13,16 @@ export default function EditSaleModal({ sale, onClose, onUpdated }: EditSaleModa
         sale.start_date
             ? (typeof sale.start_date === "string" && (sale.start_date as string).includes("T"))
                 ? (sale.start_date as string).split("T")[0]
-                : new Date(sale.start_date as string | number | Date).toISOString().split("T")[0]
+                : new Date(sale.start_date).toISOString().split("T")[0]
             : ""
     );
     const [endDate, setEndDate] = useState(
         sale.end_date
-            ? typeof sale.end_date === "string"
+            ? (typeof sale.end_date === "string" && (sale.end_date as string).includes("T"))
                 ? (sale.end_date as string).split("T")[0]
-                : new Date(sale.end_date).toISOString().split("T")[0]
+                : new Date(sale.end_date as unknown as Date).toISOString().split("T")[0]
             : ""
     );
-
 
     const [saleImageFile, setSaleImageFile] = useState<File | null>(null);
     const [products, setProducts] = useState<ProductInput[]>([]);
@@ -32,17 +31,18 @@ export default function EditSaleModal({ sale, onClose, onUpdated }: EditSaleModa
 
     const token = localStorage.getItem("token");
 
-    // Charger les produits existants liés à la vente
+    // Charger les produits
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const token = localStorage.getItem("token");
                 const res = await fetch(`https://ape-back-9jp6.onrender.com/admin/sales/${sale.id}/products`, {
-                    method: "GET", headers: { Authorization: `Bearer ${token}` },
+                    headers: { Authorization: `Bearer ${token}` },
                 });
+
                 if (!res.ok) throw new Error("Erreur chargement produits");
 
                 const data = await res.json();
+
                 setProducts(
                     data.map((p: any) => ({
                         id: p.id,
@@ -61,87 +61,95 @@ export default function EditSaleModal({ sale, onClose, onUpdated }: EditSaleModa
         };
 
         fetchProducts();
-    }, [sale.id]);
+    }, [sale.id, token]);
 
-    // Met à jour isActive en fonction des dates
+    // Calcul de isActive
     useEffect(() => {
         if (startDate && endDate) {
             const today = new Date();
             today.setHours(0, 0, 0, 0);
 
-            const start = new Date(startDate);
-            const end = new Date(endDate);
-            end.setHours(23, 59, 59, 999); // inclure toute la journée de fin
+            const s = new Date(startDate);
+            const e = new Date(endDate);
+            e.setHours(23, 59, 59, 999);
 
-            setIsActive(today >= start && today <= end);
+            setIsActive(today >= s && today <= e);
         } else {
             setIsActive(false);
         }
     }, [startDate, endDate]);
 
-
-
-    const handleProductChange = (index: number, field: keyof ProductInput, value: any) => {
-        setProducts((prev) => {
-            const next = [...prev];
-            (next[index] as any)[field] = value;
-            return next;
+    const handleProductChange = (idx: number, field: keyof ProductInput, value: any) => {
+        setProducts(prev => {
+            const copy = [...prev];
+            (copy[idx] as any)[field] = value;
+            return copy;
         });
     };
 
     const handleAddProduct = () => {
-        setProducts((prev) => [
+        setProducts(prev => [
             ...prev,
-            { tempId: crypto.randomUUID(), name: "", price: "", stock: "0", description: "", imageFile: null, image_url: "" },
+            {
+                tempId: crypto.randomUUID(),
+                name: "",
+                price: "",
+                stock: "0",
+                description: "",
+                imageFile: null,
+                image_url: "",
+            },
         ]);
     };
 
     const handleRemoveProduct = (index: number) => {
-        setProducts((prev) => prev.filter((_, i) => i !== index));
+        setProducts(prev => prev.filter((_, i) => i !== index));
     };
 
+    // -------------------------------
+    //          SUBMIT PATCH
+    // -------------------------------
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
 
         try {
-            const validProducts = products
-                .filter((p) => p.name.trim() !== "" && p.price.trim() !== "")
-                .map((p) => ({
-                    id: p.id,
-                    name: p.name.trim(),
-                    price: p.price.trim(),
-                    stock: Number(p.stock || 0),
-                    description: p.description || "",
-                }));
+            // Produits valides
+            const validProducts = products.map(p => ({
+                id: p.id,
+                tempId: p.tempId,
+                name: p.name.trim(),
+                price: p.price.trim(),
+                stock: Number(p.stock || 0),
+                description: p.description || "",
+            }));
 
             const formData = new FormData();
+
             formData.append("name", name);
             formData.append("start_date", startDate || "");
             formData.append("end_date", endDate || "");
             formData.append("is_active", isActive ? "true" : "false");
             formData.append("products", JSON.stringify(validProducts));
+
+            // Nouvelle image de vente
             if (saleImageFile) formData.append("saleImage", saleImageFile);
 
-            for (const prod of products) {
-                if (prod.name.trim() !== "" && prod.price.trim() !== "") {
-                    if (prod.imageFile) {
-                        formData.append("productImages", prod.imageFile);
-                    } else {
-                        formData.append("productImages", new Blob([], { type: "application/octet-stream" }));
-                    }
+            // Images produits — VERSION CORRECTE ⬇
+            products.forEach(prod => {
+                if (prod.imageFile) {
+                    formData.append(`productImage_${prod.tempId}`, prod.imageFile);
                 }
-            }
+            });
 
             const res = await fetch(`https://ape-back-9jp6.onrender.com/admin/sales/${sale.id}`, {
                 method: "PATCH",
                 body: formData,
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                headers: { Authorization: `Bearer ${token}` },
             });
 
             if (!res.ok) throw new Error("Erreur mise à jour de la vente");
+
             alert("✅ Vente mise à jour !");
             onUpdated();
             onClose();
@@ -153,6 +161,9 @@ export default function EditSaleModal({ sale, onClose, onUpdated }: EditSaleModa
         }
     };
 
+    // -------------------------------
+    //             UI
+    // -------------------------------
     return (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
             <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-3xl max-h-[90vh] overflow-y-auto text-black">
@@ -191,13 +202,13 @@ export default function EditSaleModal({ sale, onClose, onUpdated }: EditSaleModa
                     </div>
 
                     <div className="flex items-center gap-3">
-
                         <label className="text-sm">Nouvelle image</label>
                         <input type="file" accept="image/*" onChange={(e) => setSaleImageFile(e.target.files?.[0] || null)} />
                     </div>
 
                     <div>
                         <h3 className="font-medium">Produits</h3>
+
                         <div className="space-y-3 mt-3">
                             {products.map((prod, i) => (
                                 <div key={prod.id ?? prod.tempId} className="border rounded p-3 bg-gray-50">
@@ -231,7 +242,7 @@ export default function EditSaleModal({ sale, onClose, onUpdated }: EditSaleModa
                                         />
                                         <input
                                             type="file"
-                                            accept="image/*, .pdf"
+                                            accept="image/*"
                                             onChange={(e) => handleProductChange(i, "imageFile", e.target.files?.[0] || null)}
                                         />
                                     </div>
@@ -242,6 +253,7 @@ export default function EditSaleModal({ sale, onClose, onUpdated }: EditSaleModa
                                         onChange={(e) => handleProductChange(i, "description", e.target.value)}
                                         className="w-full mt-2 border rounded px-2 py-1"
                                     />
+
                                     {prod.image_url && !prod.imageFile && (
                                         <img
                                             src={prod.image_url}
@@ -252,6 +264,7 @@ export default function EditSaleModal({ sale, onClose, onUpdated }: EditSaleModa
                                 </div>
                             ))}
                         </div>
+
                         <button
                             type="button"
                             onClick={handleAddProduct}
