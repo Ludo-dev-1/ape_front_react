@@ -56,66 +56,56 @@ export default function CreateSaleForm() {
         setLoading(true);
 
         try {
-            const validProducts = products
-                .filter(p => p.name.trim() !== "" && p.price.trim() !== "")
-                .map(p => ({
-                    id: p.id,
-                    name: p.name.trim(),
-                    price: p.price.trim(),
-                    stock: Number(p.stock || 0),
-                    description: p.description || "",
-                }));
-
-            if (validProducts.length === 0) {
-                alert("Ajoute au moins un produit complet (nom + prix).");
-                setLoading(false);
-                return;
-            }
+            const validProducts = products.map(p => ({
+                tempId: p.tempId,
+                name: p.name.trim(),
+                price: p.price.trim(),
+                stock: Number(p.stock || 0),
+                description: p.description || "",
+            }));
 
             const formData = new FormData();
+
             formData.append("name", name);
-            formData.append("start_date", startDate || "");
-            formData.append("end_date", endDate || "");
+            formData.append("start_date", startDate);
+            formData.append("end_date", endDate);
             formData.append("products", JSON.stringify(validProducts));
 
-            if (saleImageFile) formData.append("saleImage", saleImageFile);
-
-            for (const prod of products) {
-                if (prod.name.trim() !== "" && prod.price.trim() !== "") {
-                    if (prod.imageFile) {
-                        formData.append("productImages", prod.imageFile);
-                    } else {
-                        formData.append("productImages", new Blob([], { type: "application/octet-stream" }));
-                    }
-                }
+            if (saleImageFile) {
+                formData.append("saleImage", saleImageFile);
             }
 
-            const res = await fetch(`https://ape-back-9jp6.onrender.com/admin/sales`, {
+            // --- ENVOI DES IMAGES PRODUITS AVEC TEMP-ID
+            products.forEach(prod => {
+                if (prod.imageFile) {
+                    formData.append(`productImage_${prod.tempId}`, prod.imageFile);
+                }
+            });
+
+            const res = await fetch("https://ape-back-9jp6.onrender.com/admin/sales", {
                 method: "POST",
                 body: formData,
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                headers: { Authorization: `Bearer ${token}` },
             });
 
             if (!res.ok) throw new Error("Erreur création vente");
-            const data = await res.json();
-            console.log("Vente créée", data);
 
             alert("✅ Vente créée !");
+            // reset...
             setName("");
             setStartDate("");
             setEndDate("");
-            setIsActive(false);
             setSaleImageFile(null);
             setProducts([{ tempId: crypto.randomUUID(), name: "", price: "", stock: "0", description: "", imageFile: null }]);
-        } catch (err: any) {
+
+        } catch (err) {
             console.error(err);
-            alert(err.response?.data?.message || "Erreur création vente");
+            alert("Erreur création vente");
         } finally {
             setLoading(false);
         }
     };
+
 
     return (
         <form

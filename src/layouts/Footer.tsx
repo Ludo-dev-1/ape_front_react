@@ -23,8 +23,13 @@ export default function Footer() {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/contact" className="hover:underline">
-                                Contact
+                            <Link to="/login" className="hover:underline">
+                                Connexion
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/register" className="hover:underline">
+                                Inscription
                             </Link>
                         </li>
                     </ul>
