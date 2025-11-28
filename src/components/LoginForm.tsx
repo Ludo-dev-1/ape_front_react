@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuthStore } from '../stores/AuthStore';
+import { Eye, EyeOff } from "lucide-react";
 
 
 interface LoginFormProps {
@@ -9,6 +10,7 @@ interface LoginFormProps {
 const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
 
@@ -76,17 +78,24 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
                         placeholder="exemple@domaine.com"
                     />
                 </div>
-                <div className="mb-6">
+                <div className="mb-6 relative">
                     <label htmlFor="password" className="block mb-1 font-semibold">Mot de passe</label>
                     <input
                         id="password"
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         required
                         value={password}
                         onChange={e => setPassword(e.target.value)}
                         className="border border-gray-300 p-3 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
                         placeholder="Votre mot de passe"
                     />
+                    <button
+                        type="button"
+                        className="absolute inset-y-0 right-3 flex items-center"
+                        onClick={() => setShowPassword(!showPassword)}
+                    >
+                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
                 </div>
                 <button
                     type="submit"
