@@ -1,6 +1,12 @@
 import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
+
+
 
 export default function RegisterForm() {
+    // state pour afficher le mot de passe en clair ou non
+    const [showPassword, setShowPassword] = useState(false);
+
     const [formData, setFormData] = useState({
         firstname: "",
         lastname: "",
@@ -56,7 +62,7 @@ export default function RegisterForm() {
     }
 
     return (
-        <section className="bg-slate-950 py-12 min-h-screen flex items-center justify-center">
+        <section className="bg-slate-950 py-12 min-h-screen flex items-center justify-center mt-16">
             <form
                 onSubmit={handleSubmit}
                 className="max-w-md w-full bg-white p-8 rounded-lg shadow-lg space-y-4"
@@ -77,6 +83,7 @@ export default function RegisterForm() {
 
                 <input
                     type="text"
+                    id="lastname"
                     name="lastname"
                     placeholder="Nom"
                     value={formData.lastname}
@@ -87,6 +94,7 @@ export default function RegisterForm() {
 
                 <input
                     type="email"
+                    id="email"
                     name="email"
                     placeholder="Email"
                     value={formData.email}
@@ -95,25 +103,50 @@ export default function RegisterForm() {
                     className="border border-gray-300 p-3 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
 
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Mot de passe"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                    className="border border-gray-300 p-3 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-                />
-
-                <input
-                    type="password"
-                    name="repeat_password"
-                    placeholder="Répéter le mot de passe"
-                    value={formData.repeat_password}
-                    onChange={handleChange}
-                    required
-                    className="border border-gray-300 p-3 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-                />
+                <div className="relative">
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        id="password"
+                        name="password"
+                        placeholder="Mot de passe"
+                        value={formData.password}
+                        onChange={handleChange}
+                        required
+                        className="border border-gray-300 p-3 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                    {/* Bouton pour afficher/masquer le mot de passe */}
+                    <button
+                        type="button"
+                        className="absolute inset-y-0 right-3 flex items-center"
+                        onClick={() => setShowPassword(!showPassword)}
+                    >
+                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                </div>
+                <div className="relative">
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        id="repeat_password"
+                        name="repeat_password"
+                        placeholder="Répéter le mot de passe"
+                        value={formData.repeat_password}
+                        onChange={handleChange}
+                        required
+                        className="border border-gray-300 p-3 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                    <button
+                        type="button"
+                        className="absolute inset-y-0 right-3 flex items-center"
+                        onClick={() => setShowPassword(!showPassword)}
+                    >
+                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                </div>
+                <span className="italic mx-auto md:flex md:flex-col md:mx-auto 2xl:w-xl 2xl:text-xl sm:w-sm lg:w-lg md:w-md ">
+                    <p >
+                        Le mot de passe doit contenir au moins 8 caractères et au moins une lettre minuscule, une lettre majuscule, un chiffre et un caractère spécial parmi : !, @, #, $, %, ^, &, *. Oui on ne lesine pas avec la sécurité chez GreenRoots !
+                    </p>
+                </span>
 
                 <input type="hidden" name="role_id" value="2" />
 
