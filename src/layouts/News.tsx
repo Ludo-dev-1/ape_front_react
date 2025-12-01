@@ -42,7 +42,7 @@ export default function News() {
     return (
         <section className="bg-slate-900 py-28 w-full">
             <div className="container mx-auto">
-                <h2 className="text-4xl font-semibold mb-24 text-white text-center">
+                <h2 className="text-4xl font-semibold mb-24 text-white text-center mx-4">
                     Dernières actualités
                 </h2>
 
@@ -67,7 +67,7 @@ export default function News() {
 
                 {/* Affichage des articles */}
                 {articles && articles.length > 0 && (
-                    <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center transition">
+                    <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center transition mx-8">
                         {articles.slice(0, 3).map((article) => (
                             <article
                                 key={article.id}
