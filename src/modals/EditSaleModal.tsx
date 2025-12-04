@@ -242,7 +242,7 @@ export default function EditSaleModal({ sale, onClose, onUpdated }: EditSaleModa
                                         />
                                         <input
                                             type="file"
-                                            accept="image/*"
+                                            accept="image/*, .pdf"
                                             onChange={(e) => handleProductChange(i, "imageFile", e.target.files?.[0] || null)}
                                         />
                                     </div>
