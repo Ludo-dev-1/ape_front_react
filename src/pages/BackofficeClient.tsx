@@ -117,7 +117,7 @@ export default function BackofficeClient() {
             }, 1500);
 
         } catch (err: any) {
-            alert("Erreur lors de la suppression: " + err.message);
+
             iziToast.error({
                 title: "Erreur",
                 message: "Erreur lors de la suppression: " + err.message,

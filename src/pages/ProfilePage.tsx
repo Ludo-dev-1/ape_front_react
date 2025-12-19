@@ -55,12 +55,18 @@ export default function ProfilePage() {
     }, []);
 
     const handleDeleteParent = async (parentEmail: string) => {
+        const handleLogout = () => {
+            localStorage.clear();
+            window.location.href = "/";
+        };
         try {
             const token = localStorage.getItem("token");
-            if (!token) return alert("Token non trouvé.");
+            if (!token) throw new Error("Token non trouvé");
+
+            const encodedEmail = encodeURIComponent(parentEmail);
 
             const res = await fetch(
-                `https://ape-back-9jp6.onrender.com/admin/account/${parentEmail}`,
+                `https://ape-back-9jp6.onrender.com/auth/delete-account/${encodedEmail}`,
                 {
                     method: "DELETE",
                     headers: {
@@ -69,7 +75,12 @@ export default function ProfilePage() {
                 }
             );
 
-            if (!res.ok) throw new Error(`Erreur ${res.status}`);
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.message || "Erreur suppression");
+            }
+
 
             iziToast.success({
                 title: "Succès",
@@ -77,14 +88,16 @@ export default function ProfilePage() {
                 position: "topRight",
                 timeout: 1500 // optionnel : toast disparaît après 1.5 sec
             });
+            console.log("Compte supprimé avec succès");
 
             // Recharge la page après 1.5 seconde
             setTimeout(() => {
-                window.location.reload();
+                handleLogout(),
+                    window.location.href = "/";
             }, 1500);
 
         } catch (err: any) {
-            alert("Erreur lors de la suppression: " + err.message);
+            console.error("Erreur suppression :", err.message);
             iziToast.error({
                 title: "Erreur",
                 message: "Erreur lors de la suppression: " + err.message,
@@ -93,6 +106,7 @@ export default function ProfilePage() {
             });
         }
     };
+
 
     function validatePassword(): string | null {
         if (!currentPassword) return "Veuillez saisir votre mot de passe actuel.";
@@ -180,10 +194,10 @@ export default function ProfilePage() {
                                 {user.role_id}
                             </div>
                         </div>
-                        <div>
-                            <button className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
-                                onClick={() => handleDeleteParent(user.email)}> Supprimer le compte</button>
-                        </div>
+                    </div>
+                    <div>
+                        <button className="block bg-red-600 text-white mx-auto mt-8 px-4 py-2 rounded hover:bg-red-700 transition"
+                            onClick={() => handleDeleteParent(user.email)}> Supprimer le compte</button>
                     </div>
                 </section>
             )}

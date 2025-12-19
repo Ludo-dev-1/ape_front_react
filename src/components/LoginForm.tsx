@@ -30,7 +30,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
         setError(null);
 
         try {
-            // Exemple d'appel API vers backend pour login
+
             const response = await fetch('https://ape-back-9jp6.onrender.com/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -47,8 +47,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
             const token = data.token;
             login(token);
             if (onLoginSuccess) onLoginSuccess();
-            // Sinon, tu peux rediriger ici ou gérer la suite
-            window.location.href = "/"; // Redirection vers la page de connexion après l'inscription
+            window.location.href = "/"; // Redirection vers la page d'accueil après la connexion
 
         } catch (err: any) {
             setError(err.message || 'Erreur inconnue');
@@ -63,7 +62,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
                 <h2 className="text-2xl font-bold mb-4 text-center">Connexion</h2>
                 {error && (
                     <div className="mb-4 text-red-600 bg-red-100 p-2 rounded">
-                        {error}
+                        <p>Email ou mot de passe incorrect, Veuillez réessayer.</p>
                     </div>
                 )}
                 <div className="mb-4">
