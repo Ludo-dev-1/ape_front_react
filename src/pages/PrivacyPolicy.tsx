@@ -80,7 +80,7 @@ export default function PrivacyPolicy() {
                 </h2>
                 <ul className="list-disc pl-6 space-y-1">
                     <li>Administrateurs du site ;</li>
-                    <li>Prestataires d’hébergement (DigitalOcean, Vercel, etc.) ;</li>
+                    <li>Prestataires d’hébergement (Render, Vercel) ;</li>
                     <li>Prestataires de services externes (paiement, e-mail) ;</li>
                     <li>Autorités légales sur demande.</li>
                 </ul>

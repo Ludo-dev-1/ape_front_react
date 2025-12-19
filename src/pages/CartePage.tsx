@@ -9,6 +9,8 @@ export default function CartPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    const role = localStorage.getItem("role_id");
+
     const addToCart = useCartStore((state) => state.addToCart);
 
     useEffect(() => {
@@ -68,7 +70,7 @@ export default function CartPage() {
 
     return (
         <div className="container mx-auto px-4 mt-20 py-10 ">
-            <h1 className="text-3xl font-bold mb-6 text-white">🛒 Vente : {saleName}</h1>
+            <h1 className="text-3xl font-bold mb-6 text-white"> Vente : {saleName}</h1>
 
             <div className=" p-6 rounded-lg shadow-md mb-8 bg-slate-800">
                 <p>
@@ -114,10 +116,13 @@ export default function CartPage() {
                                 Ajouter au panier
                             </button>
                         )}
-                        <button className="mt-3 bg-red-600 ml-4 text-white px-4 py-2 rounded hover:bg-red-700 transition"
-                            onClick={() => handleDeleteProduct(product.id)}>
-                            Supprimer
-                        </button>
+
+                        {(role === "1" || role === "3") && (
+                            <button className="mt-3 bg-red-600 ml-4 text-white px-4 py-2 rounded hover:bg-red-700 transition"
+                                onClick={() => handleDeleteProduct(product.id)}>
+                                Supprimer
+                            </button>
+                        )}
                     </div>
                 ))}
             </div>

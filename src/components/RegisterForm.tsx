@@ -220,7 +220,7 @@ export default function RegisterForm() {
                         </p>
                     )}
                 </div>
-                <span className="italic mx-auto md:flex md:flex-col md:mx-auto 2xl:w-xl 2xl:text-xl sm:w-sm lg:w-lg md:w-md "> <p > Le mot de passe doit contenir au moins 8 caractères et au moins une lettre minuscule, une lettre majuscule, un chiffre et un caractère spécial parmi : !, @, #, $, %, ^, &, *. La sécurité avant tout ! </p> </span>
+                <span className="italic mx-auto md:flex md:flex-col md:mx-auto 2xl:w-xl 2xl:text-xl sm:w-sm lg:w-lg md:w-md "> <p > Le mot de passe doit contenir au moins 8 caractères et au moins une lettre minuscule, une lettre majuscule, un chiffre et un caractère spécial parmi : !, @, #, $, %, ^, &, *</p> </span>
 
                 <input type="hidden" name="role_id" value="2" />
 
