@@ -1,3 +1,4 @@
+import iziToast from "izitoast";
 import React, { useEffect, useState } from "react";
 
 type User = {
@@ -52,6 +53,46 @@ export default function ProfilePage() {
         }
         loadUser();
     }, []);
+
+    const handleDeleteParent = async (parentEmail: string) => {
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) return alert("Token non trouvé.");
+
+            const res = await fetch(
+                `https://ape-back-9jp6.onrender.com/admin/account/${parentEmail}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            if (!res.ok) throw new Error(`Erreur ${res.status}`);
+
+            iziToast.success({
+                title: "Succès",
+                message: "Utilisateur supprimé avec succès",
+                position: "topRight",
+                timeout: 1500 // optionnel : toast disparaît après 1.5 sec
+            });
+
+            // Recharge la page après 1.5 seconde
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
+
+        } catch (err: any) {
+            alert("Erreur lors de la suppression: " + err.message);
+            iziToast.error({
+                title: "Erreur",
+                message: "Erreur lors de la suppression: " + err.message,
+                position: "topRight",
+                timeout: 1500
+            });
+        }
+    };
 
     function validatePassword(): string | null {
         if (!currentPassword) return "Veuillez saisir votre mot de passe actuel.";
@@ -138,6 +179,10 @@ export default function ProfilePage() {
                             <div className="bg-slate-800 px-3 py-2 rounded-md text-gray-100 capitalize">
                                 {user.role_id}
                             </div>
+                        </div>
+                        <div>
+                            <button className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
+                                onClick={() => handleDeleteParent(user.email)}> Supprimer le compte</button>
                         </div>
                     </div>
                 </section>

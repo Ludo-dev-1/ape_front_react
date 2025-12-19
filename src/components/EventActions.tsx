@@ -8,7 +8,7 @@ type Props = {
 export default function EventActions({ eventId }: Props) {
     const role = typeof window !== "undefined" ? localStorage.getItem("role_id") : null;
 
-    if (role !== "4" && role !== "1") return null; // pas membre bureau => pas de boutons
+    if (role !== "4" && role !== "1") return null; // pas membre bureau et pas admin=> pas de boutons
 
     return (
         <div className="mt-8 w-full flex justify-end gap-4">
