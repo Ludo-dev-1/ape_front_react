@@ -65,7 +65,7 @@ const EditEventForm: React.FC<EditEventFormProps> = ({
 
                 setTimeout(() => {
                     window.location.href = `/events/${eventId}`;
-                }, 1500); // ⏳ petit délai pour laisser le toast s'afficher
+                }, 1500);
             } else {
                 iziToast.error({
                     title: "Erreur",

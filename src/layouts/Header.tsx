@@ -90,11 +90,18 @@ export default function Header() {
                                     </Link>
                                 </li>
                                 {user.role === "1" && (
-                                    <li>
-                                        <Link to="/backoffice" className={isActive("/backoffice")}>
-                                            Back-Office
-                                        </Link>
-                                    </li>
+                                    <>
+                                        <li>
+                                            <Link to="/backoffice" className={isActive("/backoffice")}>
+                                                Back-Office
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/backoffice/poll" className={isActive("/backoffice/poll")}>
+                                                Sondage
+                                            </Link>
+                                        </li>
+                                    </>
                                 )}
                                 <li>
                                     <button onClick={handleLogout} className="hover:text-blue-600 cursor-pointer">

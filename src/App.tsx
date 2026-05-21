@@ -15,16 +15,18 @@ import ShopPage from "./pages/shopPage";
 import CartPage from "./pages/CartePage";
 import RegisterForm from "./components/RegisterForm";
 import BackofficeClient from "./pages/BackofficeClient";
+import PollAdminPage from "./pages/PollAdminPage";
 import CreateSaleForm from "./components/CreateSaleForm";
 import Panier from "./pages/Panier";
 import ProfilePage from "./pages/ProfilePage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Poll from "./layouts/poll";
 
 function App() {
   return (
     <>
 
-      <section className="bg-slate-950 box-border outline-none p-0 decoration-none list-none scroll-smooth min-h-screen flex flex-col">
+      <section className="bg-slate-950 box-border outline-none p-0 decoration-none list-none scroll-smooth min-h-screen flex flex-col ">
 
         <Header />
 
@@ -38,6 +40,7 @@ function App() {
                 <Hero />
                 <News />       {/* seulement les 3 derniers articles */}
                 <MonthEvent />
+                <Poll />
               </>
             }
           />
@@ -49,6 +52,9 @@ function App() {
 
           {/** Page du backoffice */}
           <Route path="/backoffice" element={<BackofficeClient />} />
+
+          {/* Page du sondage (admin) */}
+          <Route path="/backoffice/poll" element={<PollAdminPage />} />
 
           {/* Page des actualités complètes */}
           <Route path="/news" element={<NewsPage />} />

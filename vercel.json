@@ -1,6 +1,10 @@
 {
     "rewrites": [
         {
+            "source": "/api/(.*)",
+            "destination": "https://ape-back-9jp6.onrender.com/$1"
+        },
+        {
             "source": "/(.*)",
             "destination": "/"
         }
