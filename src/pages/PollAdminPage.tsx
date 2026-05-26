@@ -26,7 +26,7 @@ export default function PollAdminPage() {
     const [error, setError] = useState<string | null>(null);
     const [readOnlyMode, setReadOnlyMode] = useState(false);
 
-    const API_BASE = "/api";
+    const API_BASE = "https://ape-back-9jp6.onrender.com";
 
     const getAuthHeaders = (): HeadersInit => {
         const token = localStorage.getItem("token");
@@ -119,6 +119,25 @@ export default function PollAdminPage() {
         loadPoll();
     }, []);
 
+    const addChoice = async () => {
+        try {
+            setLoading(true);
+            setError(null);
+            await fetch(`${API_BASE}/votes`, {
+                method: "POST",
+                headers: { ...getAuthHeaders(), "Content-Type": "application/json" },
+                body: JSON.stringify({ option: "Nouveau choix" }),
+            });
+
+            await loadPoll();
+        } catch (err) {
+            console.error("Erreur ajout choix :", err);
+            setError(err instanceof Error ? err.message : "Impossible d'ajouter le choix.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const handleTitleSaved = async (newTitle: string) => {
         setPollTitle(newTitle);
     };
@@ -184,6 +203,14 @@ export default function PollAdminPage() {
                                         <p className="mt-1 text-sm text-slate-400">
                                             {choices.length} choix disponible{choices.length > 1 ? "s" : ""}
                                         </p>
+                                        <button
+                                            onClick={addChoice}
+                                            disabled={readOnlyMode}
+                                            className={`mt-4 inline-flex items-center rounded-lg bg-cyan-600 px-4 py-2 text-sm font-medium text-white transition-colors duration-200 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-cyan-400/50 disabled:text-cyan-200/70 ${readOnlyMode ? "cursor-not-allowed bg-gray-500/50 text-gray-300/70" : "hover:bg-cyan-700"
+                                                }`}
+                                        >
+                                            Ajouter un choix
+                                        </button>
                                     </div>
                                 </div>
 

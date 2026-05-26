@@ -32,7 +32,7 @@ export default function Poll() {
     const [isAdmin, setIsAdmin] = useState(false);
     const [pollTitle, setPollTitle] = useState("");
     const [selectedChoiceId, setSelectedChoiceId] = useState<string>("");
-    const API_BASE = "/api";
+    const API_BASE = "https://ape-back-9jp6.onrender.com";
     const totalVotes = results.reduce((sum, result) => sum + result.count, 0);
 
     const getAuthHeaders = (): HeadersInit => {
@@ -133,20 +133,23 @@ export default function Poll() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    choiceId: selectedChoice.id,
-                    option: selectedChoice.option,
-                }),
+                body: JSON.stringify({ option: selectedChoice.option }),
             });
 
             if (response.ok) {
+                setResults((currentResults) =>
+                    currentResults.map((choice) =>
+                        String(choice.id) === String(selectedChoice.id)
+                            ? { ...choice, count: choice.count + 1 }
+                            : choice
+                    )
+                );
+
                 iziToast.success({
                     title: "Succès",
                     message: "Votre vote a été enregistré !",
                     position: "topRight",
                 });
-                await fetchResults();
-                setSelectedChoiceId(String(results[0]?.id ?? ""));
             } else {
                 const rawError = await response.text();
                 let message = "Erreur côté serveur";
@@ -257,11 +260,12 @@ export default function Poll() {
                             </div>
 
                             <div className="space-y-4">
-                                {results.map((r, index) => {
-                                    const percentage = totalVotes > 0 ? Math.round((r.count / totalVotes) * 100) : 0;
+                                {results.map((r) => {
+                                    const rawPercentage = totalVotes > 0 ? (r.count / totalVotes) * 100 : 0;
+                                    const percentage = Math.max(0, Math.min(100, Math.round(rawPercentage)));
 
                                     return (
-                                        <div key={index} className="rounded-xl border border-slate-700 bg-slate-900/60 p-4">
+                                        <div key={String(r.id)} className="rounded-xl border border-slate-700 bg-slate-900/60 p-4">
                                             <div className="mb-2 flex items-baseline justify-between gap-4">
                                                 <span className="text-sm font-semibold capitalize text-slate-100">
                                                     {r.option}
