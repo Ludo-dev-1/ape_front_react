@@ -63,7 +63,9 @@ export default function Poll() {
 
     const fetchResults = async () => {
         try {
-            const res = await fetch(`${API_BASE}/votes/results`);
+            const res = await fetch(`${API_BASE}/votes/results`, {
+                cache: "no-store",
+            });
 
             if (!res.ok) {
                 const text = await res.text();
@@ -88,15 +90,28 @@ export default function Poll() {
                 count: Number(choice.count) || 0,
             }));
 
-            setResults(normalized);
+            const groupedResults = normalized.reduce<Result[]>((accumulator, choice) => {
+                const groupKey = choice.option.trim();
+                const existingChoice = accumulator.find((item) => item.option.trim() === groupKey);
+
+                if (!existingChoice) {
+                    accumulator.push({ ...choice });
+                    return accumulator;
+                }
+
+                existingChoice.count += choice.count > 0 ? choice.count : 1;
+                return accumulator;
+            }, []);
+
+            setResults(groupedResults);
 
             setSelectedChoiceId((currentChoiceId) => {
-                if (normalized.length === 0) {
+                if (groupedResults.length === 0) {
                     return "";
                 }
 
-                const stillExists = normalized.some((choice) => String(choice.id) === currentChoiceId);
-                return stillExists ? currentChoiceId : String(normalized[0].id);
+                const stillExists = groupedResults.some((choice) => String(choice.id) === currentChoiceId);
+                return stillExists ? currentChoiceId : String(groupedResults[0].id);
             });
 
         } catch (err) {
@@ -137,19 +152,13 @@ export default function Poll() {
             });
 
             if (response.ok) {
-                setResults((currentResults) =>
-                    currentResults.map((choice) =>
-                        String(choice.id) === String(selectedChoice.id)
-                            ? { ...choice, count: choice.count + 1 }
-                            : choice
-                    )
-                );
-
                 iziToast.success({
                     title: "Succès",
                     message: "Votre vote a été enregistré !",
                     position: "topRight",
                 });
+
+                await fetchResults();
             } else {
                 const rawError = await response.text();
                 let message = "Erreur côté serveur";

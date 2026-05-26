@@ -27,7 +27,7 @@ interface EditPoolFormProps {
 export default function EditPoolForm({
     pollTitle,
     choice,
-    apiBase = "/api",
+    apiBase = "https://ape-back-9jp6.onrender.com",
     titleEndpoint,
     updateEndpoint,
     deleteEndpoint,
