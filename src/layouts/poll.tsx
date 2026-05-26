@@ -31,6 +31,7 @@ export default function Poll() {
     const [loading, setLoading] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const [pollTitle, setPollTitle] = useState("");
+    const [selectedChoiceId, setSelectedChoiceId] = useState<string>("");
     const API_BASE = "/api";
     const totalVotes = results.reduce((sum, result) => sum + result.count, 0);
 
@@ -89,6 +90,15 @@ export default function Poll() {
 
             setResults(normalized);
 
+            setSelectedChoiceId((currentChoiceId) => {
+                if (normalized.length === 0) {
+                    return "";
+                }
+
+                const stillExists = normalized.some((choice) => String(choice.id) === currentChoiceId);
+                return stillExists ? currentChoiceId : String(normalized[0].id);
+            });
+
         } catch (err) {
             console.error("Erreur réseau :", err);
         }
@@ -104,14 +114,9 @@ export default function Poll() {
 
     const postVote = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const form = event.currentTarget;
+        const selectedChoice = results.find((choice) => String(choice.id) === selectedChoiceId);
 
-        const formData = new FormData(form);
-        const selectedOption = formData.get("question") as string;
-
-        console.log("Option sélectionnée :", selectedOption); // DEBUG
-
-        if (!selectedOption) {
+        if (!selectedChoice) {
             iziToast.error({
                 title: "Erreur",
                 message: "Veuillez sélectionner une option",
@@ -128,7 +133,10 @@ export default function Poll() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ option: selectedOption }),
+                body: JSON.stringify({
+                    choiceId: selectedChoice.id,
+                    option: selectedChoice.option,
+                }),
             });
 
             if (response.ok) {
@@ -138,7 +146,7 @@ export default function Poll() {
                     position: "topRight",
                 });
                 await fetchResults();
-                form.reset();
+                setSelectedChoiceId(String(results[0]?.id ?? ""));
             } else {
                 const rawError = await response.text();
                 let message = "Erreur côté serveur";
@@ -203,7 +211,8 @@ export default function Poll() {
 
                         <select
                             name="question"
-                            defaultValue={results[0]?.option ?? ""}
+                            value={selectedChoiceId}
+                            onChange={(event) => setSelectedChoiceId(event.target.value)}
                             disabled={results.length === 0}
                             className="w-full rounded-lg border border-slate-600 bg-slate-900 px-4 py-3 text-slate-100"
                         >
@@ -211,7 +220,7 @@ export default function Poll() {
                                 <option value="">Aucun choix disponible</option>
                             ) : (
                                 results.map((r) => (
-                                    <option key={r.id} value={r.option}>
+                                    <option key={r.id} value={String(r.id)}>
                                         {r.option}
                                     </option>
                                 ))
